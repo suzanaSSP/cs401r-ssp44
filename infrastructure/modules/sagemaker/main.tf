@@ -30,10 +30,6 @@ resource "aws_sagemaker_domain" "this" {
     security_groups = var.security_group_ids
   }
 
-  tags = {
-    Name = "${var.project}-${var.environment}-domain"
-  }
-
   retention_policy {
     home_efs_file_system = "Delete"
   }
