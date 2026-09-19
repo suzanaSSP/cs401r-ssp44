@@ -1,0 +1,8 @@
+| Component | Monthly Estimate | Key Assumptions | One Optimization |
+| --- | --- | --- | --- |
+| SageMaker Studio | $4.22 | `ml.t3.medium` ($0.05/hr) running 4 hrs/day for 21 business days (~84 hrs/month). The domain itself carries no base hourly charge. | Implement auto-shutdown lifecycle scripts after 60 min of idle time to prevent accidental overnight runs, saving up to ~$25/month. |
+| S3 storage | $0.23 | 10 GB standard storage across raw, processed, features, and artifacts at $0.023/GB. Negligible PUT/GET request fees. | Apply lifecycle rules to transition intermediate features and artifacts to S3 Standard-IA after 30 days, cutting storage costs by ~45%. |
+| Internet Gateway | $0.09 | Free hourly attachment; ~10 GB egress data transfer per month for downloading small artifacts and web traffic at $0.009/GB (first 100 GB/month egress from AWS is free). | Keep large ML data artifacts within the AWS internal network to incur $0 data egress charges. |
+| DynamoDB (state lock) | $0.00 | On-Demand capacity with ~100 reads/writes per month for Terraform state locking. Well within the AWS Free Tier (25 WCU/RCU free). | None needed; remains functionally $0 under steady state. |
+| S3 state bucket | $0.02 | < 1 GB storage for `.tfstate` files and version history at $0.023/GB. | Expire non-current object versions older than 90 days to prevent unbounded version build-up over time. |
+| **Total** | **$4.56** | | |
