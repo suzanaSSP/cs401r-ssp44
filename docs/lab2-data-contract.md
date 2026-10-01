@@ -13,7 +13,15 @@ One row per transaction. A customer appears on many rows.
 ### Schema
 | Column | Type | Nullable | Description |
 |--------|------|----------|-------------|
-[fill in all columns from the processed dataset]
+|"transaction_id" | string | No | id of a single transaction|
+|"customer_id" | string | No | id of customer | 
+|"purchase_date" | date | No | date of purchase (MM/dd/yyy) |
+|"order_value" | double | No | cost of purchase in USD (nulls are imputed with median) |
+|"num_items" | bigint | No | how many items bought |
+|"payment_method" | string | No | how customer paid purchase |
+|"channel" | string | No | Online or store (nulls imputed with 'unknown') |
+|"store_id" | string | No | store purchased id |
+|"product_category" | string | No | topic of product bought | 
 
 ### Quality Guarantees
 - `customer_id` is never null
