@@ -15,7 +15,7 @@ One row per transaction. A customer appears on many rows.
 |--------|------|----------|-------------|
 |"transaction_id" | string | No | id of a single transaction|
 |"customer_id" | string | No | id of customer | 
-|"purchase_date" | date | No | date of purchase (MM/dd/yyy) |
+|"purchase_date" | date | No | date of purchase (yyyy-MM-dd) |
 |"order_value" | double | No | cost of purchase in USD (nulls are imputed with median) |
 |"num_items" | bigint | No | how many items bought |
 |"payment_method" | string | No | how customer paid purchase |
@@ -26,7 +26,7 @@ One row per transaction. A customer appears on many rows.
 ### Quality Guarantees
 - `customer_id` is never null
 - No duplicate `transaction_id` rows (a `customer_id` repeating across rows is expected, not a defect)
-- All numeric columns are within expected ranges (specify bounds)
+- All numeric columns are within expected ranges (`order_value > 0`, `num_items >= 1`)
 - `purchase_date` is a valid ISO 8601 date
 
 ### SLA
