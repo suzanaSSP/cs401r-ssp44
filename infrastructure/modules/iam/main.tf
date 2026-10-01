@@ -46,7 +46,7 @@ resource "aws_iam_policy" "ml_engineer" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
- 
+
       {
         Effect = "Allow"
         Action = [
@@ -117,7 +117,8 @@ resource "aws_iam_role" "data_engineer" {
         Principal = {
           Service = [
             "sagemaker.amazonaws.com",
-            "glue.amazonaws.com"
+            "glue.amazonaws.com",
+            "lambda.amazonaws.com"
           ]
         }
         Action = "sts:AssumeRole"
@@ -150,7 +151,8 @@ resource "aws_iam_policy" "data_engineer" {
         Effect = "Allow"
         Action = [
           "s3:ListBucket",
-          "s3:GetBucketLocation"
+          "s3:GetBucketLocation",
+          "s3:GetBucketAcl"
         ]
         Resource = local.bucket_arn
       },
@@ -167,12 +169,13 @@ resource "aws_iam_policy" "data_engineer" {
         Effect = "Allow"
         Action = [
           "s3:PutObject",
-          "s3:DeleteObject"
+          "s3:DeleteObject",
+          "s3:PutObjectAcl"
         ]
         Resource = [
-          "${local.bucket_arn}/raw/*",
-          "${local.bucket_arn}/processed/*",
-          "${local.bucket_arn}/features/*",
+          "${local.bucket_arn}/raw*",
+          "${local.bucket_arn}/processed*",
+          "${local.bucket_arn}/features*",
           "${local.bucket_arn}/artifacts/glue/*"
         ]
       },
@@ -183,6 +186,16 @@ resource "aws_iam_policy" "data_engineer" {
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
           "logs:PutLogEvents"
+        ]
+        Resource = "*"
+      },
+      {
+        Sid    = "SageMakerFeatureStore"
+        Effect = "Allow"
+        Action = [
+          "sagemaker:PutRecord",
+          "sagemaker:CreateFeatureGroup",
+          "sagemaker:DescribeFeatureGroup"
         ]
         Resource = "*"
       }

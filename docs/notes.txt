@@ -1,0 +1,136 @@
+# 1. Apply your Terraform changes
+cd infrastructure/environments/dev
+terraform apply
+
+# 2. Upload the raw sample CSV
+aws s3 cp northstar-raw-sample.csv \
+  s3://northstar-dev-data-$(aws sts get-caller-identity --query Account --output text)/raw/customers/northstar-raw-sample.csv
+
+# 3. Run the crawler and wait for it to finish
+aws glue start-crawler --name northstar-dev-raw-crawler
+aws glue get-crawler --name northstar-dev-raw-crawler --query 'Crawler.State'
+
+# 4. Verify the catalog table was registered
+aws glue get-table --database-name northstar_dev --name customers
+
+# 5. Run the transform job
+aws glue start-job-run --job-name northstar-dev-transform
+
+# 6. Check that the job SUCCEEDED
+aws glue get-job-runs --job-name northstar-dev-transform --query 'JobRuns[0].JobRunState'
+
+# 7. Check the Parquet output in S3
+aws s3 ls s3://northstar-dev-data-$(aws sts get-caller-identity --query Account --output text)/processed/customers/ --recursive
+
+
+{
+    "Table": {
+        "Name": "customers",
+        "DatabaseName": "northstar_dev",
+        "Owner": "owner",
+        "CreateTime": 1790885732.0,
+        "UpdateTime": 1790885732.0,
+        "LastAccessTime": 1790885732.0,
+        "Retention": 0,
+        "StorageDescriptor": {
+            "Columns": [
+                {
+                    "Name": "transaction_id",
+                    "Type": "string"
+                },
+                {
+                    "Name": "customer_id",
+                    "Type": "string"
+                },
+                {
+                    "Name": "purchase_date",
+                    "Type": "string"
+                },
+                {
+                    "Name": "order_value",
+                    "Type": "double"
+                },
+                {
+                    "Name": "num_items",
+                    "Type": "bigint"
+                },
+                {
+                    "Name": "payment_method",
+                    "Type": "string"
+                },
+                {
+                    "Name": "channel",
+                    "Type": "string"
+                },
+                {
+                    "Name": "store_id",
+                    "Type": "string"
+                },
+                {
+                    "Name": "product_category",
+                    "Type": "string"
+                }
+            ],
+            "Location": "s3://northstar-dev-data-042186225029/raw/customers/",
+            "InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
+            "OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
+            "Compressed": false,
+            "NumberOfBuckets": -1,
+            "SerdeInfo": {
+                "SerializationLibrary": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+                "Parameters": {
+                    "field.delim": ","
+                }
+            },
+            "BucketColumns": [],
+            "SortColumns": [],
+            "Parameters": {
+                "skip.header.line.count": "1",
+                "sizeKey": "13582469",
+                "objectCount": "1",
+                "UPDATED_BY_CRAWLER": "northstar-dev-raw-crawler",
+                "recordCount": "149257",
+                "CrawlerSchemaSerializerVersion": "1.0",
+                "averageRecordSize": "91",
+                "compressionType": "none",
+                "CrawlerSchemaDeserializerVersion": "1.0",
+                "classification": "csv",
+                "columnsOrdered": "true",
+                "delimiter": ",",
+                "areColumnsQuoted": "false",
+                "CRAWL_RUN_ID": "485f086c-c9eb-4a81-8dd8-52c25f916ba9",
+                "typeOfData": "file"
+            },
+            "StoredAsSubDirectories": false
+        },
+        "PartitionKeys": [],
+        "TableType": "EXTERNAL_TABLE",
+        "Parameters": {
+            "skip.header.line.count": "1",
+            "sizeKey": "13582469",
+            "objectCount": "1",
+            "UPDATED_BY_CRAWLER": "northstar-dev-raw-crawler",
+            "recordCount": "149257",
+            "CrawlerSchemaSerializerVersion": "1.0",
+            "averageRecordSize": "91",
+            "compressionType": "none",
+            "CrawlerSchemaDeserializerVersion": "1.0",
+            "classification": "csv",
+            "columnsOrdered": "true",
+            "delimiter": ",",
+            "areColumnsQuoted": "false",
+            "CRAWL_RUN_ID": "485f086c-c9eb-4a81-8dd8-52c25f916ba9",
+            "typeOfData": "file"
+        },
+        "CreatedBy": "arn:aws:sts::042186225029:assumed-role/northstar-dev-DataEngineer/AWS-Crawler",
+        "IsRegisteredWithLakeFormation": false,
+        "CatalogId": "042186225029",
+        "VersionId": "0",
+        "IsMultiDialectView": false,
+        "IsMaterializedView": false
+    }
+}
+
+{
+    "JobRunId": "jr_ff87fe26e2e2ff52500ebde64e121efeacc0505b576d98cf9a22150862d94d47"
+}

@@ -21,56 +21,56 @@
 # TODO: implement the six resources above.
 
 resource "aws_vpc" "this" {
-    cidr_block = var.vpc_cidr
-    enable_dns_hostnames = true
-    enable_dns_support = true
+  cidr_block           = var.vpc_cidr
+  enable_dns_hostnames = true
+  enable_dns_support   = true
 
-    tags = {
-        Name = "${var.project}-${var.environment}-vpc"
-    }
+  tags = {
+    Name = "${var.project}-${var.environment}-vpc"
+  }
 }
 
 resource "aws_subnet" "public" {
-    vpc_id = aws_vpc.this.id
-    cidr_block = var.public_subnet_cidr
-    availability_zone = var.availability_zone
-    map_public_ip_on_launch = true
+  vpc_id                  = aws_vpc.this.id
+  cidr_block              = var.public_subnet_cidr
+  availability_zone       = var.availability_zone
+  map_public_ip_on_launch = true
 
-    tags = {
-        Name = "${var.project}-${var.environment}-public-subnet"
-    }
+  tags = {
+    Name = "${var.project}-${var.environment}-public-subnet"
+  }
 }
 
 resource "aws_subnet" "private" {
-    vpc_id                  = aws_vpc.this.id
-    cidr_block              = var.private_subnet_cidr
-    availability_zone       = var.availability_zone
-    map_public_ip_on_launch = false
+  vpc_id                  = aws_vpc.this.id
+  cidr_block              = var.private_subnet_cidr
+  availability_zone       = var.availability_zone
+  map_public_ip_on_launch = false
 
-    tags = {
-        Name = "${var.project}-${var.environment}-private-subnet"
-    }
+  tags = {
+    Name = "${var.project}-${var.environment}-private-1"
+  }
 }
 
 resource "aws_internet_gateway" "this" {
-    vpc_id = aws_vpc.this.id
+  vpc_id = aws_vpc.this.id
 
-    tags = {
-        Name = "${var.project}-${var.environment}-igw"
-    }
+  tags = {
+    Name = "${var.project}-${var.environment}-igw"
+  }
 }
 
 resource "aws_route_table" "this" {
-    vpc_id = aws_vpc.this.id
-    
-    route {
-        cidr_block = "0.0.0.0/0"
-        gateway_id = aws_internet_gateway.this.id
-    }
+  vpc_id = aws_vpc.this.id
 
-    tags = {
-        Name = "${var.project}-${var.environment}-public-rt"
-    }
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.this.id
+  }
+
+  tags = {
+    Name = "${var.project}-${var.environment}-public-rt"
+  }
 }
 
 resource "aws_route_table_association" "public" {
