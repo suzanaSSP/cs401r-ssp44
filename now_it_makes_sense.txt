@@ -1,0 +1,13 @@
+
+Now it makes sense:
+Data is stored in a parquet file in S3. The metadata is in AWS Glue Catalog. s
+AWS Sagemaker fetches metadata from AWs Glue Catalog using Athena to make queries from the parquet files
+
+MLFlow App -> Way to track model logs, metrics, paramters, etc. in a serverless way
+XGBoost-> Combines weak models with multiple stronger models
+
+Class imbalance -> there are more customers who stay than who leave, that affects training data. The penalty is this way:
+Whenever you make a mistake on a positive case (a churner), penalize that error 3.545 times more than an error on a non-churner."
+Class 0 (Majority): Customers who stay (~78% of customers)
+Class 1 (Minority): Customers who churn/leave (~22% of customers)
+There are about 3.5× more non-churners than churners.

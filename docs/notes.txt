@@ -134,3 +134,20 @@ aws s3 ls s3://northstar-dev-data-$(aws sts get-caller-identity --query Account 
 {
     "JobRunId": "jr_ff87fe26e2e2ff52500ebde64e121efeacc0505b576d98cf9a22150862d94d47"
 }
+
+MLFlow output: arn:aws:sagemaker:us-east-1:042186225029:mlflow-app/app-Q456B7EDIMRY
+{
+    "UserId": "AIDAQTUT6WWC6SFBBEKMA",
+    "Account": "042186225029",
+    "Arn": "arn:aws:iam::042186225029:user/401R-Admin-su"
+}
+
+LAB 3:
+cd cs401r-lab3-template
+python churn_training_skeleton.py \
+  --feature-group-name northstar-dev-customer-features \
+  --artifacts-bucket northstar-dev-data-042186225029 \
+  --mlflow-arn arn:aws:sagemaker:us-east-1:042186225029:mlflow-app/app-Q456B7EDIMRY \
+  --run-name "run-depth6-eta0.1" \
+  --max-depth 6 \
+  --eta 0.1
