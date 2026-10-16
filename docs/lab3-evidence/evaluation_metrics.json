@@ -1,0 +1,42 @@
+{
+  "auc_roc": 0.7764,
+  "precision_top10": 0.69,
+  "recall_top10": 0.3136,
+  "auc_vs_baseline": 0.0532,
+  "baseline_auc": 0.7232,
+  "lift_ci_low": 0.0331,
+  "lift_ci_high": 0.0731,
+  "positive_rate_val": 0.22,
+  "n_val_samples": 3000,
+  "eval_timestamp": "2026-10-15T19:39:04.301771",
+  "slices": {
+    "Silver": {
+      "n_samples": 1139,
+      "n_positives": 226,
+      "recall_top10": 0.1858,
+      "auc_roc": 0.6959,
+      "flagged": true
+    },
+    "Platinum": {
+      "n_samples": 307,
+      "n_positives": 21,
+      "recall_top10": 0.1905,
+      "auc_roc": 0.8773,
+      "flagged": true
+    },
+    "Bronze": {
+      "n_samples": 1071,
+      "n_positives": 361,
+      "recall_top10": 0.4266,
+      "auc_roc": 0.7536,
+      "flagged": false
+    },
+    "Gold": {
+      "n_samples": 483,
+      "n_positives": 52,
+      "recall_top10": 0.1346,
+      "auc_roc": 0.743,
+      "flagged": true
+    }
+  }
+}

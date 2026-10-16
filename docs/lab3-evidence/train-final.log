@@ -1,0 +1,71 @@
+sagemaker.config INFO - Not applying SDK defaults from location: /Library/Application Support/sagemaker/config.yaml
+sagemaker.config INFO - Not applying SDK defaults from location: /Users/suzanapinheiro/Library/Application Support/sagemaker/config.yaml
+/Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/.venv/lib/python3.14/site-packages/sagemaker/__init__.py:86: SageMakerV2DeprecationWarning: You are using the SageMaker Python SDK v2, which is on path of deprecation. v3 is the actively developed major version.
+See https://github.com/aws/sagemaker-python-sdk/blob/master/migration.md for the migration guide. Set SAGEMAKER_SUPPRESS_V2_WARNING=1 to silence this warning.
+  warn_v2_deprecation()
+You are using the SageMaker Python SDK v2, which is on path of deprecation. v3 is the actively developed major version.
+See https://github.com/aws/sagemaker-python-sdk/blob/master/migration.md for the migration guide. Set SAGEMAKER_SUPPRESS_V2_WARNING=1 to silence this warning.
+============================================================
+NorthStar Churn Prediction — Training Script
+============================================================
+Athena QueryExecutionId: 3d011078-77ab-4d31-ae81-84d0da33e0f7
+Preprocessing 9,999 samples...
+  Positive class rate: 22.0%
+  Feature matrix shape: (9999, 11)
+
+Train: 6,999 | Validation: 3,000
+
+Training XGBoost with params: {
+  "objective": "binary:logistic",
+  "eval_metric": [
+    "logloss",
+    "auc"
+  ],
+  "max_depth": 6,
+  "eta": 0.1,
+  "min_child_weight": 5,
+  "subsample": 0.8,
+  "colsample_bytree": 0.8,
+  "scale_pos_weight": 3.544805194805195,
+  "seed": 42,
+  "verbosity": 1
+}
+[0]	train-logloss:0.66950	train-auc:0.77899	validation-logloss:0.67126	validation-auc:0.75050
+[25]	train-logloss:0.48144	train-auc:0.86170	validation-logloss:0.51977	validation-auc:0.78188
+[50]	train-logloss:0.43097	train-auc:0.88773	validation-logloss:0.50289	validation-auc:0.77843
+[54]	train-logloss:0.42375	train-auc:0.90809	validation-logloss:0.50169	validation-auc:0.77638
+/Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/cs401r-lab3-template/churn_training_skeleton.py:545: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "eval_timestamp": datetime.utcnow().isoformat(),
+
+── Evaluation Results ──────────────────────────────
+  precision_top10          : 0.6900  (threshold: 0.5000)  ✓ PASS
+  recall_top10             : 0.3136  (threshold: 0.2500)  ✓ PASS
+  auc_lift 95% CI          : [0.0331, 0.0731]  (must exclude 0)  ✓ PASS
+  All thresholds passed ✓
+
+── Slice Evaluation (Aggregate recall@10%: 0.3136) ──
+  Tier Silver     | N:  1139 | Recall@10%: 0.1858 | AUC: 0.6959 | ⚠ FLAGGED (>10pp drop)
+  Tier Platinum   | N:   307 | Recall@10%: 0.1905 | AUC: 0.8773 | ⚠ FLAGGED (>10pp drop)
+  Tier Bronze     | N:  1071 | Recall@10%: 0.4266 | AUC: 0.7536 | ✓ PASS
+  Tier Gold       | N:   483 | Recall@10%: 0.1346 | AUC: 0.7430 | ⚠ FLAGGED (>10pp drop)
+/Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/cs401r-lab3-template/churn_training_skeleton.py:732: UserWarning: [13:39:04] WARNING: /Users/runner/work/xgboost/xgboost/src/c_api/c_api.cc:1553: Saving model in the UBJSON format as default. You can use a file extension: `json` or `ubj` to choose between formats.
+  model.save_model(model_path)
+
+✓ Model saved to ./model/model.xgb
+/Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/cs401r-lab3-template/churn_training_skeleton.py:745: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "training_date": datetime.utcnow().isoformat(),
+/Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/cs401r-lab3-template/churn_training_skeleton.py:762: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  s3_key = f"artifacts/models/{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}/model.tar.gz"
+✓ Uploaded model artifact to s3://northstar-dev-data-042186225029/artifacts/models/20261015_193904/model.tar.gz
+✓ Created Model Package Group: northstar-churn-models
+/Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/cs401r-lab3-template/churn_training_skeleton.py:785: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  ModelPackageDescription=f"Churn XGBoost model (AUC: {metrics.get('auc_roc', 'N/A')}) trained {datetime.utcnow().date()}",
+✓ Model registered in SageMaker Model Registry: arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/1
+2026/10/15 13:39:07 INFO mlflow.tracking.fluent: Experiment with name 'northstar-churn' does not exist. Creating a new experiment.
+🚀 View run run-depth6-eta0.1 at: https://mlflow.sagemaker.us-east-1.app.aws/#/experiments/1/runs/2d256cbd8503470099ff4f108b86b104
+🧪 View experiment at: https://mlflow.sagemaker.us-east-1.app.aws/#/experiments/1
+✓ Successfully logged run 'run-depth6-eta0.1' to MLflow App
+
+============================================================
+Training complete. AUC-ROC: 0.7764
+============================================================

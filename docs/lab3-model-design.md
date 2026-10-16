@@ -15,6 +15,13 @@ I would switch to logistic regression, if the retention team needed it to be ext
 
 #### Report the recency-only baseline against your full model. If the lift was small, say so and explain why. Which features carried real signal, and which were decorative?
 
+|Metric                             |	    Your value	       |Threshold       |
+|---------                          |-------------------------|----------------|
+|AUC-ROC (test set)	                |   0.7764                |report it — no fixed threshold|
+|Precision @ top 10%                |	0.6900       |≥ 0.50
+|Recall @ top 10%                   |	     0.3136  |≥ 0.25
+|AUC lift over recency-only baseline|[0.0331, 0.0731]|95% CI must exclude zero
+
 ## Section 3: LLM system
 #### Why RAG over fine-tuning (Track B), or an agent over a simpler pipeline (Track C)? Name the primary production risk of your choice.
 

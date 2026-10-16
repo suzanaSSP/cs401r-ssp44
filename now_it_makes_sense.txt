@@ -11,3 +11,7 @@ Whenever you make a mistake on a positive case (a churner), penalize that error 
 Class 0 (Majority): Customers who stay (~78% of customers)
 Class 1 (Minority): Customers who churn/leave (~22% of customers)
 There are about 3.5× more non-churners than churners.
+
+AUC-ROC -> Area under the Receiver Operating Characteristic curve.
+If I pick a customer that churned and a customer that didn't churn, how likely is the model going to assign a higher propability to churn to the churner 
+(77% chance the model correctly ranks a churner above a non-churner)
