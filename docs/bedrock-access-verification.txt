@@ -1,0 +1,7 @@
+Model Access Verification:
+Model ID: us.anthropic.claude-haiku-4-5-20251001-v1:0
+Provider: Anthropic
+Status: Access Granted / Agreement Active
+Test Invocation: Successful
+Response: Hello
+Latency: 474ms

@@ -1,5 +1,5 @@
-tier,n,positives,recall,auc,flagged
-Bronze,1071,361,0.4266,0.7536,False
-Silver,1139,226,0.1858,0.6959,True
-Gold,483,52,0.1346,0.7430,True
-Platinum,307,21,0.1905,0.8773,True
+tier,n,positives,recall,auc,flagged,weakest_tier
+Bronze,1071,361,0.4266,0.7536,False, False
+Silver,1139,226,0.1858,0.6959,True, True
+Gold,483,52,0.1346,0.7430,True, False
+Platinum,307,21,0.1905,0.8773,True, False

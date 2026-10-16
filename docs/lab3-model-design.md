@@ -22,6 +22,11 @@ I would switch to logistic regression, if the retention team needed it to be ext
 |Recall @ top 10%                   |	     0.3136  |≥ 0.25
 |AUC lift over recency-only baseline|[0.0331, 0.0731]|95% CI must exclude zero
 
+Baseline Lift (Row 3): Explain that the full model achieves AUC 0.7764 vs baseline 0.7232, with the 95% CI [0.0331, 0.0731] strictly excluding zero.
+Slice Evaluation (Row 6):
+Weakest Tiers: Gold has the lowest recall ($13.46%$, flagging a $>10\text{pp}$ drop from aggregate $31.36%$), and Silver has the lowest AUC ($0.6959$).
+Small Tier: Platinum only contains $21$ positive churners out of $307$ validation customers, making the sample size statistically too small to draw firm conclusions.
+
 ## Section 3: LLM system
 #### Why RAG over fine-tuning (Track B), or an agent over a simpler pipeline (Track C)? Name the primary production risk of your choice.
 
