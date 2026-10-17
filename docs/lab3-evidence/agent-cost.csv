@@ -1,0 +1,12 @@
+run,session_id,input_tokens,output_tokens,model_cost_usd,runtime_cost_est_usd,total_est_usd,tool_calls,stop_reason,seconds
+eval-1,test-TC-001-1792172427-35a8b572-b289-4238-b732-9179ebdf17fe,4171,205,0.005716,0.0033,0.009016,1,end_turn,4.5
+eval-1,test-TC-002-1792172432-ca49aedb-df00-459b-bb9b-14f88f67e4d3,7693,421,0.010778,0.0033,0.014078,2,end_turn,8.9
+eval-1,test-TC-003-1792172441-0fc06008-a5bc-4b03-8a00-678bed414fe2,4780,359,0.007233,0.0033,0.010533,1,end_turn,7.8
+eval-1,test-TC-004-1792172448-9e18d780-7b7b-473d-bcd3-4415c2a94a27,1976,122,0.002845,0.0033,0.006145,0,end_turn,3.3
+eval-1,test-TC-005-1792172452-7eb4ff48-f6a2-4c0f-bbeb-41a7cf062fd3,4850,383,0.007442,0.0033,0.010742,1,end_turn,6.6
+eval-1,test-TC-006-1792172458-958c78c5-f2ee-4c0d-8e17-180d486fc74e,1994,158,0.003062,0.0033,0.006362,0,end_turn,3.1
+demo-notebook,demo-order-lookup-e06037eb-b94b-4e37-a269-b55e2778ea53,4182,240,0.00592,0.0033,0.00922,1,end_turn,6.0
+demo-notebook,demo-return-policy-241f0f92-88a6-48c4-b028-810b165a2ad2,4652,266,0.00658,0.0033,0.00988,1,end_turn,5.2
+demo-notebook,demo-order-lookup-5396cc37-74c3-436f-98b7-d35c9a1fe66d,4181,223,0.005826,0.0033,0.009126,1,end_turn,4.1
+demo-notebook,demo-return-policy-2ec18015-d0ca-40f6-a567-daa76c9ce791,4651,320,0.006876,0.0033,0.010176,1,end_turn,7.4
+demo-notebook,demo-final-sale-escalate-8cd3dffa-8559-4e76-b4c2-9f9cb43cbf21,4825,374,0.007365,0.0033,0.010665,1,end_turn,6.8
