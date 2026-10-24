@@ -46,7 +46,13 @@ resource "aws_iam_policy" "ml_engineer" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
-
+      {
+        Sid       = "PassSelfToSageMaker"
+        Effect    = "Allow"
+        Action    = ["iam:PassRole"]
+        Resource  = aws_iam_role.ml_engineer.arn
+        Condition = { StringEquals = { "iam:PassedToService" = "sagemaker.amazonaws.com" } }
+      },
       {
         Effect = "Allow"
         Action = [
@@ -103,6 +109,8 @@ resource "aws_iam_role_policy_attachment" "ml_engineer" {
   role       = aws_iam_role.ml_engineer.name
   policy_arn = aws_iam_policy.ml_engineer.arn
 }
+
+
 
 # ── DataEngineer ─────────────────────────────────────────────────────────────
 

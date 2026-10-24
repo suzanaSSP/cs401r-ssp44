@@ -15,3 +15,10 @@ There are about 3.5× more non-churners than churners.
 AUC-ROC -> Area under the Receiver Operating Characteristic curve.
 If I pick a customer that churned and a customer that didn't churn, how likely is the model going to assign a higher propability to churn to the churner 
 (77% chance the model correctly ranks a churner above a non-churner)
+
+CodePipeline: Pipeline when code changes, it automatically runs the steps to build, test, and deploy your code. 
+    - It needs its own bucket when doing pipeline tests. It also needs versioning enabled.
+
+Versioning: Keeping versions of code, data, or model. Instead of replacing data when it's updated, it's assigned a versionId. 
+
+New bucket was created for CodePipeline
