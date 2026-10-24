@@ -154,3 +154,14 @@ python3 churn_training_skeleton.py \
 
 First round:
 Training complete. AUC-ROC: 0.7764
+
+aws cloudformation deploy \
+  --template-file pipeline.yaml --stack-name northstar-cicd \
+  --parameter-overrides \
+      ProjectName=northstar Environment=dev \
+      GitHubOwner=YOUR_GITHUB_USERNAME GitHubRepo=cs401r-ssp44 \
+      GitHubBranch=main ArtifactsBucket="$AB" \
+      GitHubConnectionArn=<arn from step 2> \
+      SageMakerRoleArn=$(terraform -chdir=infrastructure/environments/dev \
+                          output -raw ml_engineer_role_arn) \
+  --capabilities CAPABILITY_NAMED_IAM
