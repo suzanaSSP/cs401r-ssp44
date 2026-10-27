@@ -156,12 +156,24 @@ First round:
 Training complete. AUC-ROC: 0.7764
 
 aws cloudformation deploy \
-  --template-file pipeline.yaml --stack-name northstar-cicd \
+  --template-file cs401r-lab4-template/pipeline.yaml \
   --parameter-overrides \
       ProjectName=northstar Environment=dev \
-      GitHubOwner=YOUR_GITHUB_USERNAME GitHubRepo=cs401r-ssp44 \
+      GitHubOwner=suzanaSSP GitHubRepo=cs401r-ssp44 \
       GitHubBranch=main ArtifactsBucket="$AB" \
-      GitHubConnectionArn=<arn from step 2> \
+      GitHubConnectionArn=arn:aws:codeconnections:us-east-1:042186225029:connection/7ed079a2-a7c3-4b13-81d7-46ae1217d8c6\
       SageMakerRoleArn=$(terraform -chdir=infrastructure/environments/dev \
                           output -raw ml_engineer_role_arn) \
-  --capabilities CAPABILITY_NAMED_IAM
+  --capabilities CAPABILITY_NAMED_IAM \
+  --stack-name northstar-cicd
+
+  Tests for Task 1
+   - Data Check -> Right columns and schemas
+        - Schema Check -> right columns are present
+        - Grain Check -> 
+        - Leakage Check
+        - Distribution Checks
+        - Freshness check
+   - Feature Engineering Unit Tests
+   - Model evaluation test -> Passes baseline measurements
+   - Fairness Check -> 
