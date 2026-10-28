@@ -1,0 +1,7 @@
+[Container] 2026/10/24 02:59:20.019291 Running on CodeBuild On-demand
+[Container] 2026/10/24 02:59:20.019300 Waiting for agent ping
+[Container] 2026/10/24 02:59:20.253260 Waiting for DOWNLOAD_SOURCE
+[Container] 2026/10/24 02:59:21.567375 Phase is DOWNLOAD_SOURCE
+[Container] 2026/10/24 02:59:21.568218 CODEBUILD_SRC_DIR=/codebuild/output/src3728031470/src
+[Container] 2026/10/24 02:59:21.572265 Phase complete: DOWNLOAD_SOURCE State: FAILED
+[Container] 2026/10/24 02:59:21.572285 Phase context status code: YAML_FILE_ERROR Message: stat /codebuild/output/src3728031470/src/buildspec.yml: no such file or directory

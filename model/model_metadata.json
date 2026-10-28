@@ -1,0 +1,64 @@
+{
+  "feature_columns": [
+    "days_since_last_purchase",
+    "customer_tenure_days",
+    "purchase_frequency_30d",
+    "purchase_frequency_90d",
+    "purchase_frequency_180d",
+    "avg_order_value",
+    "total_spend_90d",
+    "total_lifetime_value",
+    "avg_basket_size_6m",
+    "category_diversity_score",
+    "online_to_store_ratio"
+  ],
+  "label_column": "churn_label",
+  "hyperparameters": {
+    "max_depth": 8,
+    "eta": 0.15,
+    "num_round": 200
+  },
+  "evaluation_metrics": {
+    "auc_roc": 0.7662,
+    "precision_top10": 0.6867,
+    "recall_top10": 0.3121,
+    "auc_vs_baseline": 0.043,
+    "baseline_auc": 0.7232,
+    "lift_ci_low": 0.0212,
+    "lift_ci_high": 0.0633,
+    "positive_rate_val": 0.22,
+    "n_val_samples": 3000,
+    "eval_timestamp": "2026-10-16T16:05:24.571740",
+    "slices": {
+      "Silver": {
+        "n_samples": 1139,
+        "n_positives": 226,
+        "recall_top10": 0.1903,
+        "auc_roc": 0.6813,
+        "flagged": true
+      },
+      "Platinum": {
+        "n_samples": 307,
+        "n_positives": 21,
+        "recall_top10": 0.1429,
+        "auc_roc": 0.8317,
+        "flagged": true
+      },
+      "Bronze": {
+        "n_samples": 1071,
+        "n_positives": 361,
+        "recall_top10": 0.4238,
+        "auc_roc": 0.7564,
+        "flagged": false
+      },
+      "Gold": {
+        "n_samples": 483,
+        "n_positives": 52,
+        "recall_top10": 0.1346,
+        "auc_roc": 0.7253,
+        "flagged": true
+      }
+    }
+  },
+  "training_date": "2026-10-16T16:05:24.595369"
+}
