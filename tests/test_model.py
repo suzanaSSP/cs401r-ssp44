@@ -27,7 +27,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import pytest
-import warnings
 
 try:
     import xgboost as xgb
@@ -402,7 +401,7 @@ class TestStoredMetricsGate:
         Not a threshold on the point estimate. A lift of +0.05 with a CI of
         [-0.01, 0.11] is not evidence of anything; a lift of +0.02 with a CI
         of [0.005, 0.035] is. The baseline is the recency-only model, not a
-        constant predictor - beating a coin flip proves nothing.F
+        constant predictor - beating a coin flip proves nothing.
         """
         
         required = {"auc_roc", "baseline_auc_roc", "lift_ci_low", "lift_ci_high"}
@@ -439,7 +438,8 @@ class TestStoredMetricsGate:
         )
 
     def test_regression_check(self, eval_metrics, champion_auc):
-        new_AUC = eval_metrics['auc_roc']
-
-        warnings.warn(f"champion auc={champion_auc:.4f}; candidate auc={new_AUC:.4f}")
-        assert new_AUC >= (champion_auc - 0.02)
+        candidate_auc = float(eval_metrics["auc_roc"])
+        assert candidate_auc >= (champion_auc - 0.02), (
+            f"Candidate AUC {candidate_auc:.4f} is more than 0.02 below "
+            f"champion AUC {champion_auc:.4f}"
+        )

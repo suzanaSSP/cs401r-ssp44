@@ -251,7 +251,7 @@ phases:
           /tmp/model/model_metadata.json
         ls -la /tmp/model
 
-    - |
+      - |
         CHAMPION_ARN=$(aws sagemaker list-model-packages \
           --model-package-group-name northstar-churn-models \
           --model-approval-status Approved \
@@ -273,25 +273,6 @@ phases:
         aws s3 cp "$METRICS_URI" /tmp/champion_metrics.json
         CHAMPION_AUC=$(python -c \
           'import json; print(json.load(open("/tmp/champion_metrics.json"))["auc_roc"])')
-
-        FAIRNESS=""
-        if [ -f tests/test_fairness.py ]; then FAIRNESS=tests/test_fairness.py; fi
-        python -m pytest tests/test_model.py $FAIRNESS -v -rw --tb=short \
-          --eval-metrics-path /tmp/eval_metrics.json \
-          --model-path /tmp/model/xgboost-model \
-          --champion-auc "$CHAMPION_AUC" \
-          --junitxml=reports/model_gate.xml
-
-
-      # One gate, one implementation, the same one a student runs locally.
-      # tests/test_fairness.py (Task 1, you write it) runs here too, because it
-      # needs the metrics this run emitted. It flags, it does not block.
-      - |
-        FAIRNESS=""
-        if [ -f tests/test_fairness.py ]; then FAIRNESS=tests/test_fairness.py; fi
-        python -m pytest tests/test_model.py $FAIRNESS -v -rw --tb=short \
-          --eval-metrics-path /tmp/eval_metrics.json \
-          --model-path /tmp/model/xgboost-model \
           --junitxml=reports/model_gate.xml
 
 
