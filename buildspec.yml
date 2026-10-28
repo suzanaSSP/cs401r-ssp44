@@ -250,7 +250,6 @@ phases:
           "s3://${DATA_BUCKET}/artifacts/evaluations/${COMMIT_SHA}/model_metadata.json" \
           /tmp/model/model_metadata.json
         ls -la /tmp/model
-
       - |
         CHAMPION_ARN=$(aws sagemaker list-model-packages \
           --model-package-group-name northstar-churn-models \
