@@ -1,46 +1,46 @@
-[Container] 2026/10/28 01:48:45.636360 Running on CodeBuild On-demand
-[Container] 2026/10/28 01:48:45.636372 Waiting for agent ping
-[Container] 2026/10/28 01:48:45.783576 Waiting for DOWNLOAD_SOURCE
-[Container] 2026/10/28 01:48:47.508454 Phase is DOWNLOAD_SOURCE
-[Container] 2026/10/28 01:48:47.509654 CODEBUILD_SRC_DIR=/codebuild/output/src2161231517/src
-[Container] 2026/10/28 01:48:47.510014 YAML location is /codebuild/output/src2161231517/src/buildspec.yml
-[Container] 2026/10/28 01:48:47.512070 Setting HTTP client timeout to higher timeout for S3 source
-[Container] 2026/10/28 01:48:47.512160 Processing environment variables
-[Container] 2026/10/28 01:48:47.552888 Expanded report group name northstar-test-reports
-[Container] 2026/10/28 01:48:47.552915 Found report group name northstar-test-reports
-[Container] 2026/10/28 01:48:47.552925 Adding prefix northstar-ci for report group name northstar-test-reports
-[Container] 2026/10/28 01:48:47.744147 Selecting 'python' runtime version '3.11' based on manual selections...
-[Container] 2026/10/28 01:48:47.744242 Running command echo "Installing Python version 3.11 ..."
+[Container] 2026/10/28 01:50:30.225802 Running on CodeBuild On-demand
+[Container] 2026/10/28 01:50:30.225812 Waiting for agent ping
+[Container] 2026/10/28 01:50:30.456399 Waiting for DOWNLOAD_SOURCE
+[Container] 2026/10/28 01:50:31.953523 Phase is DOWNLOAD_SOURCE
+[Container] 2026/10/28 01:50:31.954529 CODEBUILD_SRC_DIR=/codebuild/output/src2721863468/src
+[Container] 2026/10/28 01:50:31.954917 YAML location is /codebuild/output/src2721863468/src/buildspec.yml
+[Container] 2026/10/28 01:50:31.956526 Setting HTTP client timeout to higher timeout for S3 source
+[Container] 2026/10/28 01:50:31.956594 Processing environment variables
+[Container] 2026/10/28 01:50:31.989636 Expanded report group name northstar-test-reports
+[Container] 2026/10/28 01:50:31.989654 Found report group name northstar-test-reports
+[Container] 2026/10/28 01:50:31.989662 Adding prefix northstar-ci for report group name northstar-test-reports
+[Container] 2026/10/28 01:50:32.160031 Selecting 'python' runtime version '3.11' based on manual selections...
+[Container] 2026/10/28 01:50:32.160082 Running command echo "Installing Python version 3.11 ..."
 Installing Python version 3.11 ...
 
-[Container] 2026/10/28 01:48:47.751312 Running command pyenv global $PYTHON_311_VERSION
+[Container] 2026/10/28 01:50:32.164493 Running command pyenv global $PYTHON_311_VERSION
 
-[Container] 2026/10/28 01:48:48.611122 Moving to directory /codebuild/output/src2161231517/src
-[Container] 2026/10/28 01:48:48.612475 Expanded cache path /root/.cache/pip/**/*
-[Container] 2026/10/28 01:48:48.649377 Registering with agent
-[Container] 2026/10/28 01:48:48.649395 Phases found in YAML: 4
-[Container] 2026/10/28 01:48:48.649400  PRE_BUILD: 15 commands
-[Container] 2026/10/28 01:48:48.649403  BUILD: 15 commands
-[Container] 2026/10/28 01:48:48.649406  POST_BUILD: 7 commands
-[Container] 2026/10/28 01:48:48.649408  INSTALL: 10 commands
-[Container] 2026/10/28 01:48:48.649638 Phase complete: DOWNLOAD_SOURCE State: SUCCEEDED
-[Container] 2026/10/28 01:48:48.649648 Phase context status code:  Message: 
-[Container] 2026/10/28 01:48:48.753254 Entering phase INSTALL
-[Container] 2026/10/28 01:48:48.788136 Running command echo "=== INSTALL PHASE ==="
+[Container] 2026/10/28 01:50:32.972896 Moving to directory /codebuild/output/src2721863468/src
+[Container] 2026/10/28 01:50:32.974062 Expanded cache path /root/.cache/pip/**/*
+[Container] 2026/10/28 01:50:33.006790 Registering with agent
+[Container] 2026/10/28 01:50:33.006800 Phases found in YAML: 4
+[Container] 2026/10/28 01:50:33.006819  BUILD: 15 commands
+[Container] 2026/10/28 01:50:33.006824  POST_BUILD: 7 commands
+[Container] 2026/10/28 01:50:33.006826  INSTALL: 10 commands
+[Container] 2026/10/28 01:50:33.006828  PRE_BUILD: 15 commands
+[Container] 2026/10/28 01:50:33.006986 Phase complete: DOWNLOAD_SOURCE State: SUCCEEDED
+[Container] 2026/10/28 01:50:33.006994 Phase context status code:  Message: 
+[Container] 2026/10/28 01:50:33.105048 Entering phase INSTALL
+[Container] 2026/10/28 01:50:33.136873 Running command echo "=== INSTALL PHASE ==="
 === INSTALL PHASE ===
 
-[Container] 2026/10/28 01:48:48.793150 Running command echo "Build started at $(date)"
-Build started at Wed Oct 28 01:48:48 UTC 2026
+[Container] 2026/10/28 01:50:33.140836 Running command echo "Build started at $(date)"
+Build started at Wed Oct 28 01:50:33 UTC 2026
 
-[Container] 2026/10/28 01:48:48.798283 Running command echo "Commit SHA $CODEBUILD_RESOLVED_SOURCE_VERSION"
+[Container] 2026/10/28 01:50:33.145249 Running command echo "Commit SHA $CODEBUILD_RESOLVED_SOURCE_VERSION"
 Commit SHA d6a43bc096fd87ca4c1c713cee1af32de21823a8
 
-[Container] 2026/10/28 01:48:48.802622 Running command pip install --upgrade pip
+[Container] 2026/10/28 01:50:33.149195 Running command pip install --upgrade pip
 Requirement already satisfied: pip in /root/.pyenv/versions/3.11.17/lib/python3.11/site-packages (26.0.1)
 Collecting pip
   Downloading pip-26.2.2-py3-none-any.whl.metadata (4.6 kB)
 Downloading pip-26.2.2-py3-none-any.whl (1.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 8.1 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 8.8 MB/s  0:00:00
 Installing collected packages: pip
   Attempting uninstall: pip
     Found existing installation: pip 26.0.1
@@ -49,9 +49,9 @@ Installing collected packages: pip
 Successfully installed pip-26.2.2
 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
 
-[Container] 2026/10/28 01:49:11.926678 Running command pip install -r requirements.txt
+[Container] 2026/10/28 01:50:55.860082 Running command pip install -r requirements.txt
 ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
 
-[Container] 2026/10/28 01:49:12.306314 Command did not exit successfully pip install -r requirements.txt exit status 1
-[Container] 2026/10/28 01:49:12.343885 Phase complete: INSTALL State: FAILED
-[Container] 2026/10/28 01:49:12.343916 Phase context status code: COMMAND_EXECUTION_ERROR Message: Error while executing command: pip install -r requirements.txt. Reason: exit status 1
+[Container] 2026/10/28 01:50:56.166813 Command did not exit successfully pip install -r requirements.txt exit status 1
+[Container] 2026/10/28 01:50:56.208867 Phase complete: INSTALL State: FAILED
+[Container] 2026/10/28 01:50:56.208883 Phase context status code: COMMAND_EXECUTION_ERROR Message: Error while executing command: pip install -r requirements.txt. Reason: exit status 1
