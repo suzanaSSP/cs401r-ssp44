@@ -274,8 +274,19 @@ phases:
           --query 'ModelMetrics.ModelQuality.Statistics.S3Uri' \
           --output text)
         aws s3 cp "$METRICS_URI" /tmp/champion_metrics.json
+        CHAMPION_VERSION=$(aws sagemaker describe-model-package \
+          --model-package-name "$CHAMPION_ARN" \
+          --query 'ModelPackageVersion' \
+          --output text)
         CHAMPION_AUC=$(python -c \
           'import json; print(json.load(open("/tmp/champion_metrics.json"))["auc_roc"])')
+        echo "Regression comparison: champion v${CHAMPION_VERSION} AUC ${CHAMPION_AUC}"
+        mkdir -p reports
+        python -m pytest tests/test_model.py -v -rw --tb=short \
+          --model-path /tmp/model/xgboost-model \
+          --eval-metrics-path /tmp/eval_metrics.json \
+          --champion-auc "$CHAMPION_AUC" \
+          --champion-version "$CHAMPION_VERSION" \
           --junitxml=reports/model_gate.xml
 
 

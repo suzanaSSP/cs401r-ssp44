@@ -17,11 +17,13 @@ internal implementation. These tests would catch:
 Run locally (after the local training run in the lab handout):
     cp /tmp/out/model_metadata.json /tmp/model/
     pytest tests/test_model.py -v --model-path /tmp/model/xgboost-model \
-        --eval-metrics-path /tmp/out/evaluation_metrics.json
+        --eval-metrics-path /tmp/out/evaluation_metrics.json \
+        --champion-auc 0.75 --champion-version 3  # replace with the approved champion
 """
 
 import json
 import os
+import warnings
 from pathlib import Path
 
 import numpy as np
@@ -46,7 +48,7 @@ except ImportError:
 def model_path(request):
     path = request.config.getoption("--model-path")
     if path is None:
-        path = os.environ.get("MODEL_PATH", "./model/model.xgb")
+        path = os.environ.get("MODEL_PATH", "./model/xgboost-model")
     return path
 
 
@@ -72,11 +74,14 @@ FEATURE_COLUMNS = [
 
 @pytest.fixture(scope="module")
 def loaded_model(model_path):
-    """Load the trained model. Skip if file doesn't exist."""
+    """Load the trained model; missing inputs must fail the quality gate."""
     if not XGBOOST_AVAILABLE:
-        pytest.skip("xgboost not installed")
+        pytest.fail("xgboost is required to load and validate the model artifact")
     if not Path(model_path).exists():
-        pytest.skip(f"Model file not found at {model_path}. Train a model first.")
+        pytest.fail(
+            f"Model file not found at {model_path}. Provide the trained model "
+            "with --model-path or MODEL_PATH."
+        )
     model = xgb.Booster()
     model.load_model(model_path)
     return model
@@ -165,15 +170,11 @@ class TestModelLoading:
         )
 
     def test_model_metadata_has_evaluation_metrics(self, model_metadata):
-        if not model_metadata:
-            pytest.skip("No metadata available")
         assert "evaluation_metrics" in model_metadata, (
             "Metadata must include evaluation_metrics from training"
         )
 
     def test_metadata_records_feature_list(self, model_metadata):
-        if not model_metadata:
-            pytest.skip("No metadata available")
         recorded_features = model_metadata.get("feature_columns", [])
         assert recorded_features == FEATURE_COLUMNS, (
             f"Metadata feature list doesn't match expected. "
@@ -379,9 +380,15 @@ class TestStoredMetricsGate:
     def eval_metrics(self):
         metrics_path = os.environ.get("EVAL_METRICS_PATH", "/tmp/eval_metrics.json")
         if not Path(metrics_path).exists():
-            pytest.skip(f"Evaluation metrics not found at {metrics_path}.")
+            pytest.fail(
+                f"Evaluation metrics not found at {metrics_path}. Provide them "
+                "with --eval-metrics-path or EVAL_METRICS_PATH."
+            )
         with open(metrics_path) as f:
-            return json.load(f)
+            metrics = json.load(f)
+        if not isinstance(metrics, dict):
+            pytest.fail(f"Evaluation metrics in {metrics_path} must be a JSON object")
+        return metrics
 
     def test_precision_top10_meets_threshold(self, eval_metrics):
         p = eval_metrics.get("precision_top10", 0)
@@ -404,21 +411,17 @@ class TestStoredMetricsGate:
         constant predictor - beating a coin flip proves nothing.
         """
         
-        required = {"auc_roc", "baseline_auc_roc", "lift_ci_low", "lift_ci_high"}
+        required = {
+            "auc_roc", "baseline_auc_roc", "lift_ci_low", "lift_ci_high",
+            "precision_top10", "recall_top10", "positive_rate_val",
+        }
         missing = required - eval_metrics.keys()
         assert not missing, f"Evaluation metrics missing: {sorted(missing)}"
 
-
-        lo = eval_metrics.get("lift_ci_low")
-        hi = eval_metrics.get("lift_ci_high")
-
-        assert lo is not None and hi is not None, (
-            "lift_ci_low/lift_ci_high missing from evaluation metrics. The "
-            "training script must emit a bootstrap CI on the lift over the "
-            "recency-only baseline."
-        )
+        lo = float(eval_metrics["lift_ci_low"])
+        hi = float(eval_metrics["lift_ci_high"])
         assert lo <= hi, (
-            "Not valid CI"
+            f"Invalid lift confidence interval: lower bound {lo} exceeds upper bound {hi}"
         )
 
         assert lo > 0, (
@@ -426,20 +429,39 @@ class TestStoredMetricsGate:
             f"model beats the recency-only baseline; it will not be promoted."
         )
 
+    def test_no_slice_is_flagged(self, eval_metrics):
+        """Require per-slice metrics and fail when a slice misses the recall gate."""
+        slices = eval_metrics.get("slices")
+        assert isinstance(slices, dict) and slices, (
+            "Evaluation metrics must include non-empty per-slice results"
+        )
+        flagged = [name for name, result in slices.items()
+                   if not isinstance(result, dict) or result.get("flagged") is not False]
+        assert not flagged, (
+            "One or more slices are flagged or missing a valid flagged=false result: "
+            f"{flagged}"
+        )
+
     def test_positive_rate_is_realistic(self, eval_metrics):
         """The validation set churn rate should be near the measured 22%."""
-        rate = eval_metrics.get("positive_rate_val", -1)
-        if rate < 0:
-            pytest.skip("positive_rate_val not in metrics")
+        assert "positive_rate_val" in eval_metrics, (
+            "Evaluation metrics missing positive_rate_val"
+        )
+        rate = float(eval_metrics["positive_rate_val"])
         assert 0.15 <= rate <= 0.30, (
             f"Validation churn rate {rate:.1%} outside expected range [15%, 30%]. "
             f"The reference dataset measures 22.0%. Check that your validation "
             f"split is stratified."
         )
 
-    def test_regression_check(self, eval_metrics, champion_auc):
+    def test_regression_check(self, eval_metrics, champion_auc, champion_version):
         candidate_auc = float(eval_metrics["auc_roc"])
+        warnings.warn(
+            f"champion v{champion_version} auc={champion_auc:.4f}; "
+            f"candidate auc={candidate_auc:.4f}",
+            stacklevel=1,
+        )
         assert candidate_auc >= (champion_auc - 0.02), (
             f"Candidate AUC {candidate_auc:.4f} is more than 0.02 below "
-            f"champion AUC {champion_auc:.4f}"
+            f"champion v{champion_version} AUC {champion_auc:.4f}"
         )

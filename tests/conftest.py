@@ -41,6 +41,12 @@ def pytest_addoption(parser):
         default=None,
         help="AUC of the latest approved champion model",
     )
+    parser.addoption(
+        "--champion-version",
+        action="store",
+        default=None,
+        help="Model Registry version of the latest approved champion model",
+    )
 
 
 def pytest_configure(config):
@@ -64,5 +70,13 @@ def champion_auc(request):
         return float(value)
     except ValueError:
         pytest.fail(f"--champion-auc must be numeric, got {value!r}")
+
+
+@pytest.fixture(scope="session")
+def champion_version(request):
+    value = request.config.getoption("--champion-version")
+    if value is None:
+        pytest.fail("--champion-version is required for the regression record")
+    return value
 
 
