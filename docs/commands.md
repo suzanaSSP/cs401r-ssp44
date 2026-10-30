@@ -21,6 +21,12 @@ aws codepipeline get-pipeline-execution \
   --query 'pipelineExecution.[status,startTime]' \
   --output table
 
+aws codepipeline get-pipeline-execution \
+  --pipeline-name northstar-pipeline \
+  --pipeline-execution-id "d4f2dd0d-1ea8-4aea-9944-44eb23915dd3" \
+  --region us-east-1 \
+  --query 'pipelineExecution.[status,startTime]' \
+  --output table
 ```
 3. Run output in log
 ```
@@ -48,6 +54,15 @@ aws codebuild batch-get-builds \
 save_log "$B" docs/lab4-build-green.log
 ```
 
+4. Stop Pipeline
+```
+aws codepipeline stop-pipeline-execution \
+  --pipeline-name northstar-pipeline \
+  --pipeline-execution-id "22c97ada-ebf8-466a-9453-fe899faf3ca5" \
+  --region us-east-1 \
+  --no-abandon \
+  --reason "Stopping duplicate runs"
+```
 Notes: 
 northstar-ci:629ff630-8ecb-48aa-b99e-07eeab269cbf
 

@@ -156,12 +156,9 @@ class TestRecencyFeatures:
         """Customer with no transactions should get a sentinel value (e.g., 999)."""
         empty_txns = pd.DataFrame(columns=["customer_id", "purchase_date", "order_value"])
         customer_ids = pd.DataFrame({"customer_id": ["CUST-NODATA"]})
-
-        # TODO: Your function should handle customers with no transactions
-        # Expected behavior: return days_since_last_purchase = 999 (or configurable sentinel)
-        # features = compute_recency_features(empty_txns, SNAPSHOT_DATE, customer_ids)
-        # assert features.iloc[0]["days_since_last_purchase"] == 999
-        pass
+        features = compute_recency_features(empty_txns, SNAPSHOT_DATE, customer_ids)
+        assert features.loc[0, "days_since_last_purchase"] == 999
+        assert features.loc[0, "customer_tenure_days"] == 0
 
 
 # ── Frequency Feature Tests ────────────────────────────────────────────────────
@@ -298,7 +295,7 @@ class TestFullFeatureSet:
         active_customer_ids = sample_transactions["customer_id"].unique()
         active_features = features[features["customer_id"].isin(active_customer_ids)]
         null_counts = active_features[self.REQUIRED_FEATURES].isna().sum()
-        # TODO: Assert null_counts.sum() == 0 (implement after deciding on null strategy)
+        assert null_counts.sum() == 0, f"Known customers have null features: {null_counts.to_dict()}"
 
     def test_output_has_customer_id_column(self, sample_customers, sample_transactions):
         features = build_churn_feature_set(
@@ -307,3 +304,77 @@ class TestFullFeatureSet:
             snapshot_date=SNAPSHOT_DATE,
         )
         assert "customer_id" in features.columns, "Output must include customer_id for joining"
+
+
+class TestBoundaryAndEdgeCases:
+    """Feature behavior for empty customer histories and a single purchase."""
+
+    @pytest.fixture
+    def no_purchase_inputs(self):
+        roster = pd.DataFrame({"customer_id": ["CUST-NODATA"]})
+        transactions = pd.DataFrame(columns=[
+            "customer_id", "purchase_date", "order_value", "num_items",
+            "product_category", "channel",
+        ])
+        return roster, transactions
+
+    def test_zero_purchase_frequency_is_zero(self, no_purchase_inputs):
+        roster, transactions = no_purchase_inputs
+        features = compute_frequency_features(transactions, SNAPSHOT_DATE, roster)
+        assert features.loc[0, "purchase_frequency_30d"] == 0
+        assert features.loc[0, "purchase_frequency_90d"] == 0
+        assert features.loc[0, "purchase_frequency_180d"] == 0
+
+    def test_zero_purchase_monetary_values_are_zero(self, no_purchase_inputs):
+        roster, transactions = no_purchase_inputs
+        features = compute_monetary_features(transactions, SNAPSHOT_DATE, roster)
+        assert features.loc[0, "avg_order_value"] == 0
+        assert features.loc[0, "total_spend_90d"] == 0
+        assert features.loc[0, "total_lifetime_value"] == 0
+        assert features.loc[0, "avg_basket_size_6m"] == 0
+
+    def test_zero_purchase_behavioral_values_are_zero(self, no_purchase_inputs):
+        roster, transactions = no_purchase_inputs
+        features = compute_behavioral_features(transactions, roster)
+        assert features.loc[0, "category_diversity_score"] == 0
+        assert features.loc[0, "online_to_store_ratio"] == 0
+
+    def test_full_feature_set_retains_zero_purchase_customer(self, no_purchase_inputs):
+        roster, transactions = no_purchase_inputs
+        features = build_churn_feature_set(roster, transactions, SNAPSHOT_DATE)
+        assert len(features) == 1
+        assert features.loc[0, "days_since_last_purchase"] == 999
+        assert features.loc[0, "purchase_frequency_90d"] == 0
+        assert features.loc[0, "total_spend_90d"] == 0
+        assert features.loc[0, "category_diversity_score"] == 0
+
+    def test_single_transaction_computes_each_feature_family(self):
+        roster = pd.DataFrame({"customer_id": ["CUST-SINGLE"]})
+        transactions = pd.DataFrame([{
+            "transaction_id": "TXN-SINGLE-1",
+            "customer_id": "CUST-SINGLE",
+            "purchase_date": "2026-03-27",
+            "order_value": 42.0,
+            "num_items": 3,
+            "product_category": "Electronics",
+            "channel": "online",
+        }])
+
+        recency = compute_recency_features(transactions, SNAPSHOT_DATE)
+        frequency = compute_frequency_features(transactions, SNAPSHOT_DATE)
+        monetary = compute_monetary_features(transactions, SNAPSHOT_DATE)
+        behavioral = compute_behavioral_features(transactions)
+        full = build_churn_feature_set(roster, transactions, SNAPSHOT_DATE)
+
+        assert recency.loc[0, "days_since_last_purchase"] == 5
+        assert recency.loc[0, "customer_tenure_days"] == 5
+        assert frequency.loc[0, "purchase_frequency_30d"] == 1
+        assert frequency.loc[0, "purchase_frequency_90d"] == 1
+        assert frequency.loc[0, "purchase_frequency_180d"] == 1
+        assert monetary.loc[0, "avg_order_value"] == pytest.approx(42.0)
+        assert monetary.loc[0, "total_spend_90d"] == pytest.approx(42.0)
+        assert monetary.loc[0, "total_lifetime_value"] == pytest.approx(42.0)
+        assert monetary.loc[0, "avg_basket_size_6m"] == pytest.approx(3.0)
+        assert behavioral.loc[0, "category_diversity_score"] == pytest.approx(1 / 8)
+        assert behavioral.loc[0, "online_to_store_ratio"] == pytest.approx(1.0)
+        assert len(full) == full["customer_id"].nunique() == 1
