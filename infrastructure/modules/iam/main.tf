@@ -12,6 +12,8 @@
 # TODO: implement the three resources above.
 
 data "aws_caller_identity" "current" {}
+data "aws_partition" "current" {}
+data "aws_region" "current" {}
 
 locals {
   bucket_name = "${var.project}-${var.environment}-data-${data.aws_caller_identity.current.account_id}"
@@ -52,6 +54,15 @@ resource "aws_iam_policy" "ml_engineer" {
         Action    = ["iam:PassRole"]
         Resource  = aws_iam_role.ml_engineer.arn
         Condition = { StringEquals = { "iam:PassedToService" = "sagemaker.amazonaws.com" } }
+      },
+      {
+        Sid    = "TagTrainingJobs"
+        Effect = "Allow"
+        Action = [
+          "sagemaker:AddTags",
+          "sagemaker:ListTags"
+        ]
+        Resource = "arn:${data.aws_partition.current.partition}:sagemaker:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:training-job/*"
       },
       {
         Effect = "Allow"

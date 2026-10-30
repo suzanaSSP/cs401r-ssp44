@@ -23,7 +23,7 @@ aws codepipeline get-pipeline-execution \
 
 aws codepipeline get-pipeline-execution \
   --pipeline-name northstar-pipeline \
-  --pipeline-execution-id "32742928-6228-42f0-9f98-380b277e6610" \
+  --pipeline-execution-id "c9159c9f-fb60-4047-ba75-7b90b07fce90" \
   --region us-east-1 \
   --query 'pipelineExecution.[status,startTime]' \
   --output table
