@@ -1,34 +1,50 @@
 ## Lab4 -> saving logs in docs/lab4-build-green.logs:
 
-1. Define the save_log Helper Function
-First, paste this helper function into your shell (bash or zsh):
-usage: save_log <codebuild-build-id> <output-file>
-Bash
+1. Build 
 ```
-save_log () {   
+aws codepipeline start-pipeline-execution \
+  --name northstar-pipeline \
+  --region us-east-1
+```
+2. Get status
+
+```
+EXECUTION_ID=$(aws codepipeline start-pipeline-execution \
+  --name northstar-pipeline \
+  --region us-east-1 \
+  --query 'pipelineExecutionId' --output text)
+
+aws codepipeline get-pipeline-execution \
+  --pipeline-name northstar-pipeline \
+  --pipeline-execution-id "$EXECUTION_ID" \
+  --region us-east-1 \
+  --query 'pipelineExecution.[status,startTime]' \
+  --output table
+
+```
+3. Run output in log
+```
+save_log () {
+  local G S
   read -r G S <<< "$(aws codebuild batch-get-builds --ids "$1" \
-      --query 'builds[0].logs.[groupName,streamName]' --output text)"
+    --query 'builds[0].logs.[groupName,streamName]' --output text)"
   aws logs filter-log-events --log-group-name "$G" --log-stream-names "$S" --output json \
     | python3 -c 'import json,sys; sys.stdout.write("".join(e["message"] if e["message"].endswith("\n") else e["message"]+"\n" for e in json.load(sys.stdin)["events"]))' \
     > "$2"
 }
-```
-2. Find Your Final Green Build ID
-Find the ID of your most recent SUCCEEDED CodeBuild run:
-```
-Bash
-aws codebuild list-builds-for-project --project-name northstar-ci --query 'ids[0]' --output text
-```
-You can verify its status is SUCCEEDED with:
-```
-Bash
-B=$(aws codebuild list-builds-for-project --project-name northstar-ci --query 'ids[0]' --output text)
-aws codebuild batch-get-builds --ids "$B" --query 'builds[0].[id,buildStatus]' --output text
-```
-3. Extract the Green Log
-Run save_log using that build ID to write the log into docs/lab4-build-green.log:
-```
-Bash
+
+B=$(aws codebuild list-builds-for-project \
+  --project-name northstar-ci \
+  --sort-order DESCENDING \
+  --region us-east-1 \
+  --query 'ids[0]' --output text)
+
+aws codebuild batch-get-builds \
+  --ids "$B" \
+  --region us-east-1 \
+  --query 'builds[0].[id,buildStatus,startTime]' \
+  --output table
+
 save_log "$B" docs/lab4-build-green.log
 ```
 
