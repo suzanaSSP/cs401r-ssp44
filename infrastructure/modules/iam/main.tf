@@ -16,8 +16,12 @@ data "aws_partition" "current" {}
 data "aws_region" "current" {}
 
 locals {
-  bucket_name = "${var.project}-${var.environment}-data-${data.aws_caller_identity.current.account_id}"
-  bucket_arn  = "arn:aws:s3:::${local.bucket_name}"
+  bucket_name             = "${var.project}-${var.environment}-data-${data.aws_caller_identity.current.account_id}"
+  bucket_arn              = "arn:aws:s3:::${local.bucket_name}"
+  sagemaker_arn_prefix    = "arn:${data.aws_partition.current.partition}:sagemaker:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}"
+  model_package_group     = "${var.project}-churn-models"
+  model_package_group_arn = "${local.sagemaker_arn_prefix}:model-package-group/${local.model_package_group}"
+  model_package_arn       = "${local.sagemaker_arn_prefix}:model-package/${local.model_package_group}/*"
 }
 
 resource "aws_iam_role" "ml_engineer" {
@@ -63,6 +67,34 @@ resource "aws_iam_policy" "ml_engineer" {
           "sagemaker:ListTags"
         ]
         Resource = "arn:${data.aws_partition.current.partition}:sagemaker:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:training-job/*"
+      },
+      {
+        Sid    = "ManageChurnModelPackages"
+        Effect = "Allow"
+        Action = [
+          "sagemaker:CreateModelPackageGroup",
+          "sagemaker:DescribeModelPackageGroup",
+          "sagemaker:CreateModelPackage",
+          "sagemaker:DescribeModelPackage",
+          "sagemaker:ListModelPackages",
+          "sagemaker:UpdateModelPackage"
+        ]
+        Resource = [
+          local.model_package_group_arn,
+          local.model_package_arn
+        ]
+      },
+      {
+        Sid    = "TagChurnModelPackages"
+        Effect = "Allow"
+        Action = [
+          "sagemaker:AddTags",
+          "sagemaker:ListTags"
+        ]
+        Resource = [
+          local.model_package_group_arn,
+          local.model_package_arn
+        ]
       },
       {
         Effect = "Allow"
