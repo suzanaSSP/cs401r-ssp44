@@ -84,6 +84,10 @@ phases:
       # behaviour: a CI run that cannot see the data must not report success.
       - export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
       - export DATA_BUCKET="${PROJECT}-${ENVIRONMENT}-data-${ACCOUNT_ID}"
+      # The source artifact includes local Parquet snapshots under data/.
+      # Clear them first so the recursive S3 downloads cannot mix old snapshots
+      # with the current processed/features datasets.
+      - rm -rf data/processed data/features
       - mkdir -p data/processed data/features
       - aws s3 cp "s3://${DATA_BUCKET}/raw/customers/northstar-raw-sample.csv" data/northstar-raw-sample.csv
       - aws s3 cp "s3://${DATA_BUCKET}/processed/customers/" data/processed/ --recursive --exclude "*_glue_temp*"
