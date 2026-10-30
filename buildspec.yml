@@ -255,6 +255,8 @@ phases:
           /tmp/model/model_metadata.json
         ls -la /tmp/model
       - |
+        CHAMPION_AUC=""
+        CHAMPION_VERSION=""
         CHAMPION_ARN=$(aws sagemaker list-model-packages \
           --model-package-group-name northstar-churn-models \
           --model-approval-status Approved \
@@ -265,22 +267,22 @@ phases:
           --output text)
 
         if [ -z "$CHAMPION_ARN" ] || [ "$CHAMPION_ARN" = "None" ]; then
-          echo "No approved champion model found"
-          exit 1
+          echo "No approved champion model found; skipping only the champion regression comparison for this bootstrap run."
+        else
+          METRICS_URI=$(aws sagemaker describe-model-package \
+            --model-package-name "$CHAMPION_ARN" \
+            --query 'ModelMetrics.ModelQuality.Statistics.S3Uri' \
+            --output text)
+          aws s3 cp "$METRICS_URI" /tmp/champion_metrics.json
+          CHAMPION_VERSION=$(aws sagemaker describe-model-package \
+            --model-package-name "$CHAMPION_ARN" \
+            --query 'ModelPackageVersion' \
+            --output text)
+          CHAMPION_AUC=$(python -c \
+            'import json; print(json.load(open("/tmp/champion_metrics.json"))["auc_roc"])')
+          echo "Regression comparison: champion v${CHAMPION_VERSION} AUC ${CHAMPION_AUC}"
         fi
 
-        METRICS_URI=$(aws sagemaker describe-model-package \
-          --model-package-name "$CHAMPION_ARN" \
-          --query 'ModelMetrics.ModelQuality.Statistics.S3Uri' \
-          --output text)
-        aws s3 cp "$METRICS_URI" /tmp/champion_metrics.json
-        CHAMPION_VERSION=$(aws sagemaker describe-model-package \
-          --model-package-name "$CHAMPION_ARN" \
-          --query 'ModelPackageVersion' \
-          --output text)
-        CHAMPION_AUC=$(python -c \
-          'import json; print(json.load(open("/tmp/champion_metrics.json"))["auc_roc"])')
-        echo "Regression comparison: champion v${CHAMPION_VERSION} AUC ${CHAMPION_AUC}"
         mkdir -p reports
         python -m pytest tests/test_model.py -v -rw --tb=short \
           --model-path /tmp/model/xgboost-model \

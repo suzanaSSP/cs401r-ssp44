@@ -63,8 +63,8 @@ def pytest_configure(config):
 @pytest.fixture(scope="session")
 def champion_auc(request):
     value = request.config.getoption("--champion-auc")
-    if value is None:
-        pytest.fail("--champion-auc is required for the regression gate")
+    if value is None or not value.strip():
+        return None
 
     try:
         return float(value)
@@ -75,8 +75,6 @@ def champion_auc(request):
 @pytest.fixture(scope="session")
 def champion_version(request):
     value = request.config.getoption("--champion-version")
-    if value is None:
-        pytest.fail("--champion-version is required for the regression record")
-    return value
+    return value if value and value.strip() else None
 
 

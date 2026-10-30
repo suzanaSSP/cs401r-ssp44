@@ -455,6 +455,15 @@ class TestStoredMetricsGate:
         )
 
     def test_regression_check(self, eval_metrics, champion_auc, champion_version):
+        if champion_auc is None and champion_version is None:
+            pytest.skip(
+                "No approved champion model is available; skipping the AUC "
+                "regression comparison for this bootstrap run."
+            )
+        assert champion_auc is not None and champion_version is not None, (
+            "Champion AUC and version must either both be provided or both be absent"
+        )
+
         candidate_auc = float(eval_metrics["auc_roc"])
         warnings.warn(
             f"champion v{champion_version} auc={champion_auc:.4f}; "
