@@ -71,3 +71,53 @@ Two automatable retraining triggers are defined for the NorthStar churn predicti
   - SageMaker Model Monitor analyzes live endpoint requests against the training baseline and publishes drift metrics to Amazon CloudWatch.
   - A **CloudWatch Alarm** monitoring `ModelMonitorDriftDetected` (or `ProductionAUC < 0.72`) enters the `ALARM` state.
   - The alarm state transition triggers an **Amazon EventBridge** rule that invokes `codepipeline:StartPipelineExecution` on `northstar-pipeline`, initiating an automated retrain and champion-challenger evaluation. 
+
+
+
+## DataOps Maturity
+Current level: 2
+
+**Evidence:**
+ 
+The data pipeline has a script that runs tests on the structure of the data when there’s any change. It also checks on feature engineering jobs whether certain items are met (1 row per customer, recent data less than 48 hours etc). All of this is in test_data.py and test_features.py. It also sense notifications when something fails using AWS SNS
+
+  - [buildspec.yml](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/buildspec.yml#L99-L107), pre-flight validation is enforced in CodeBuild's `pre_build` phase before any training compute is provisioned.
+  - [docs/lab4-build-green.log:L315-354](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/docs/lab4-build-green.log#L315-L354): Executes [tests/test_data.py](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/tests/test_data.py), validating raw schema, null checks, date parsing, and customer grain preservation (`28 passed in 0.93s`).
+  - [docs/lab4-build-green.log:L359-393](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/docs/lab4-build-green.log#L359-L393): Executes [tests/test_features.py](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/tests/test_features.py), asserting absence of target leakage, monotonicity across frequency windows, and category diversity calculation (`23 passed in 0.72s`).
+
+- **Automated Fail-Fast Pipeline Halting**:
+  - [docs/lab4-failure-demo.txt:L41-68](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/docs/lab4-failure-demo.txt#L41-L68) and [docs/lab4-build-failed.log:L345](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/docs/lab4-build-failed.log#L345): An intentional schema defect (`TestFeatures::test_schema`) failed the `PRE_BUILD` phase, immediately aborting the build without executing SageMaker training, tripping the CloudWatch alarm `northstar-ci-build-failure` (ALARM state) and triggering an SNS alert to `northstar-model-approvals` ([docs/lab4-alarm-email.png](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/docs/lab4-alarm-email.png)).
+
+**Gap to Level 3: [What is the specific missing capability?]:**
+
+These tests only run when someone manually runs them. What’s missing is an automation where these tests run automatically after it detects new S3 raw batch uploads. This can be done using SageMaker Model Monitor or automated Great Expectations/Glue triggers.
+
+**Top priority investment: [One concrete change that would advance maturity]:**
+
+Implement an AWS EventBridge rule listening to `s3:ObjectCreated` on the raw customer data prefix to trigger an AWS Glue Data Quality. It runs the test_data.py script before doing feature engineering to prevent compiling errors. Then it runs test_features.py after.
+
+
+## MLOps Maturity
+Current level: 2
+
+**Evidence:**
+
+File evidence:
+    - **Continuous Training & Registered Lineage**: [buildspec.yml:L142-215](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/buildspec.yml#L142-L215) upserts and starts SageMaker Pipeline `northstar-churn-pipeline` on spot instances, registering new candidate versions to the SageMaker Model Registry with complete lineage metadata.
+    - [docs/lab4-model-package.json:L2-76](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/docs/lab4-model-package.json#L2-L76): Confirms Version 13 registered in `northstar-churn-models` in `PendingManualApproval` status with recorded metrics: `auc_roc: "0.7855"`, `baseline_auc: "0.7208"`, `lift_ci_low: "0.0455"`, `lift_ci_high: "0.0839"`, `commit_sha: "2d71726a8e10ddbd73c9a23a2f29514a03e43c9a"`, and S3 training data URI.
+    - tests/test_fairness.py runs per-slice evaluation across loyalty tiers, auditing recall disparity and flagging gaps $> 10,\text{pp}$ for manual review without blocking CI builds.
+    - **Automated Champion-Challenger Regression Testing**:
+    - [docs/lab4-build-green.log:L644-656](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/docs/lab4-build-green.log#L644-L656): CodeBuild pulls the current approved champion package (Version 11, AUC 0.7855) dynamically from the Model Registry.
+    - [docs/lab4-build-green.log:L657-704](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/docs/lab4-build-green.log#L657-L704): Runs [tests/test_model.py](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/tests/test_model.py) (`19 passed in 1.10s`), verifying candidate AUC regression ($\text{AUC} \ge \text{Champion} - 0.02$ at L683, L699), bootstrap confidence interval lift over baseline ($\text{lift\_ci\_low} > 0$), and probability monotonicity on recency.
+    - [docs/lab4-build-green.log:L729-737](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/docs/lab4-build-green.log#L729-L737): Emits `NorthStar/CI BuildSucceeded=1` metric data to CloudWatch.
+    - **Automated Post-Build Rejection Gate**: [buildspec.yml:L314-321](file:///Users/suzanapinheiro/Documents/classes/fall2026/cs401r/cs401r-ssp44/buildspec.yml#L314-L321) ensures that any model registered during a build that fails later quality gates is automatically transitioned to `ModelApprovalStatus: Rejected`.
+
+The Machine Learning Operations is at level 2 because it has a script that automatically runs tests and the building process. When code is pushed, there’s a manual run to run tests on the data (DataOps); after data is ready, it builds and trains the model. After training the model, test_model.py script runs automatically to test the model’s metrics, performance, etc. After all the tests passed, there is a manual approval to have the model pass through if it exceeds the Champion model. This prevents model regression. Though the building, testing, and post build process is all automatic, there are still human-in-the-loop components like the Manual Approval in the middle of the pipeline. There is also a manual run to start this process. 
+
+**Gap to Level 3: [What is the specific missing capability?]**
+
+Similar to DataOpa, what’s missing is an automation to detect when code has been pushed and automatically run all of this process. Additionally, the current process lacks a performance-based retraining trigger, where a system actively monitors the model's live predictive quality and automatically launches a retraining pipeline whenever performance drops below an acceptable threshold.
+
+**Top priority investment: [One concrete change that would advance maturity]**
+
+Configure an EventBridge rule connected to CloudWatch metric alarms that monitors model performance and automatically retrains it and runs tests when its AUC reaches below its threshold.

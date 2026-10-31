@@ -290,6 +290,9 @@ phases:
           --champion-auc "$CHAMPION_AUC" \
           --champion-version "$CHAMPION_VERSION" \
           --junitxml=reports/model_gate.xml
+        python -m pytest tests/test_fairness.py -v -rw --tb=short \
+          --eval-metrics-path /tmp/eval_metrics.json \
+          --junitxml=reports/fairness_gate.xml
 
 
   post_build:
