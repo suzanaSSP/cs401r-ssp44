@@ -214,6 +214,8 @@ class TestFeatures:
         required = FEATURE_COLUMNS + ["customer_id", "loyalty_tier", "churn_label"]
         missing = [c for c in required if c not in features_df.columns]
         assert not missing, f"Feature set missing columns: {missing}"
+        assert False, "Deliberate test failure for Lab 4 CI gate demonstration"
+
 
     def test_one_row_per_customer(self, features_df):
         assert len(features_df) == features_df["customer_id"].nunique(), (
