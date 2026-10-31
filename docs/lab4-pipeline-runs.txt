@@ -1,0 +1,26 @@
+=== LATEST GREEN BUILD SUMMARY ===
+-------------------------------------------------------
+|                   BatchGetBuilds                    |
++-----------------------------------------------------+
+|  northstar-ci:b2720629-1f6b-41fa-85e9-ae1d2ee1ee97  |
+|  SUCCEEDED                                          |
+|  COMPLETED                                          |
+|  2d71726a8e10ddbd73c9a23a2f29514a03e43c9a           |
++-----------------------------------------------------+
+
+=== BUILD PHASES (RUNNING THROUGH POST_BUILD) ===
+-------------------------------------------
+|             BatchGetBuilds              |
++-------------------+-------------+-------+
+|  SUBMITTED        |  SUCCEEDED  |  0    |
+|  QUEUED           |  SUCCEEDED  |  0    |
+|  PROVISIONING     |  SUCCEEDED  |  3    |
+|  DOWNLOAD_SOURCE  |  SUCCEEDED  |  2    |
+|  INSTALL          |  SUCCEEDED  |  60   |
+|  PRE_BUILD        |  SUCCEEDED  |  6    |
+|  BUILD            |  SUCCEEDED  |  237  |
+|  POST_BUILD       |  SUCCEEDED  |  0    |
+|  UPLOAD_ARTIFACTS |  SUCCEEDED  |  1    |
+|  FINALIZING       |  SUCCEEDED  |  0    |
+|  COMPLETED        |  None       |  None |
++-------------------+-------------+-------+

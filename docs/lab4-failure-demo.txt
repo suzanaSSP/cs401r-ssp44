@@ -1,0 +1,121 @@
+=======BEFORE======== 
+
+1. Latest Model registry package:
+aws sagemaker list-model-packages \
+  --model-package-group-name northstar-churn-models \
+  --sort-by CreationTime \
+  --sort-order Descending \
+  --max-results 1 \
+  --region us-east-1 \
+  --query 'ModelPackageSummaryList[0].[ModelPackageVersion,ModelApprovalStatus,CreationTime]' \
+  --output table
+
+---------------------------
+|    ListModelPackages    |
++-------------------------+
+|  12                     |
+|  PendingManualApproval  |
+|  1793408856.812         |
+
+2. Cloudwatch Alarm State (OK):
+--------------------------------------------------------------------------------------------------------------------
+|                                                  DescribeAlarms                                                  |
++------------------------------------------------------------------------------------------------------------------+
+|  northstar-ci-build-failure                                                                                      |
+|  OK                                                                                                              |
+|  Threshold Crossed: 1 datapoint [0.0 (31/10/26 00:38:00)] was not greater than or equal to the threshold (1.0).  |
++------------------------------------------------------------------------------------------------------------------+
+
+3. Confirmed SNS Subscription 
+------------------------------------------------------------------------------------------------------------------------------------------
+|                                                        ListSubscriptionsByTopic                                                        |
++----------------------------------------------------------------------------------------------------+-------------------------+---------+
+|  arn:aws:sns:us-east-1:042186225029:northstar-model-approvals:fc8b0fc0-4ca9-43e1-882e-282905a68a37 |  suzanasp1026@gmail.com |  email  |
++----------------------------------------------------------------------------------------------------+-------------------------+---------+
+
+
+
+=========AFTER FAILED RUN==========
+
+1. Deliberate Failure Build Summary (Failed at PRE_BUILD, commit 5695783):
+$ aws codebuild batch-get-builds --ids northstar-ci:47c1bde3-eedf-4c00-b637-439839821304 --region us-east-1 --query 'builds[0].[id,buildStatus,currentPhase,resolvedSourceVersion]' --output table
+-------------------------------------------------------
+|                   BatchGetBuilds                    |
++-----------------------------------------------------+
+|  northstar-ci:47c1bde3-eedf-4c00-b637-439839821304  |
+|  FAILED                                             |
+|  COMPLETED                                          |
+|  5695783c69a017832e7f1ddb70aef510871d174b           |
++-----------------------------------------------------+
+
+2. Phase Execution (PRE_BUILD FAILED - NO BUILD Phase Executed):
+$ aws codebuild batch-get-builds --ids northstar-ci:47c1bde3-eedf-4c00-b637-439839821304 --region us-east-1 --query 'builds[0].phases[*].[phaseType,phaseStatus]' --output table
+----------------------------------
+|         BatchGetBuilds         |
++------------------+-------------+
+|  SUBMITTED       |  SUCCEEDED  |
+|  QUEUED          |  SUCCEEDED  |
+|  PROVISIONING    |  SUCCEEDED  |
+|  DOWNLOAD_SOURCE |  SUCCEEDED  |
+|  INSTALL         |  SUCCEEDED  |
+|  PRE_BUILD       |  FAILED     |
+|  FINALIZING      |  SUCCEEDED  |
+|  COMPLETED       |  None       |
++------------------+-------------+
+Test Failure Assertion from docs/lab4-build-failed.log:
+=========================== short test summary info ============================
+FAILED tests/test_data.py::TestFeatures::test_schema - AssertionError: Deliberate test failure for Lab 4 CI gate demonstration
+========================= 1 failed, 27 passed in 1.00s =========================
+
+3. Model Registry Unchanged (Still Version 12 - Gained NO Version):
+$ aws sagemaker list-model-packages --model-package-group-name northstar-churn-models --sort-by CreationTime --sort-order Descending --max-results 1 --region us-east-1 --query 'ModelPackageSummaryList[0].[ModelPackageVersion,ModelApprovalStatus,CreationTime]' --output table
+---------------------------
+|    ListModelPackages    |
++-------------------------+
+|  12                     |
+|  PendingManualApproval  |
+|  1793408856.812         |
++-------------------------+
+
+4. CloudWatch Alarm State (Transitioned to ALARM):
+$ aws cloudwatch describe-alarms --alarm-names northstar-ci-build-failure --region us-east-1 --query 'MetricAlarms[0].[AlarmName,StateValue,StateReason]' --output table
+-----------------------------------------------------------------------------------------------------------------
+|                                                DescribeAlarms                                                 |
++---------------------------------------------------------------------------------------------------------------+
+|  northstar-ci-build-failure                                                                                   |
+|  ALARM                                                                                                        |
+|  Threshold Crossed: 1 datapoint [1.0 (31/10/26 01:29:00)] was greater than or equal to the threshold (1.0).    |
++---------------------------------------------------------------------------------------------------------------+
+
+5. CloudWatch Alarm History (Successfully Executed SNS Action):
+$ aws cloudwatch describe-alarm-history --alarm-name northstar-ci-build-failure --region us-east-1 --max-items 3 --query 'AlarmHistoryItems[*].[Timestamp,HistoryItemType,HistorySummary]' --output table
+--------------------------------------------------------------------------------------------------------------------------------------------------
+|                                                              DescribeAlarmHistory                                                              |
++-------------------+--------------+-------------------------------------------------------------------------------------------------------------+
+|  1793411374.194   |  StateUpdate |  Alarm updated from ALARM to OK                                                                             |
+|  1793410474.243   |  Action      |  Successfully executed action arn:aws:sns:us-east-1:042186225029:northstar-model-approvals                |
+|  1793410474.193   |  StateUpdate |  Alarm updated from OK to ALARM                                                                            |
++-------------------+--------------+-------------------------------------------------------------------------------------------------------------+
+
+
+=== AFTER REVERT ===
+
+1. Clean Revert Build Summary (Commit 2d71726):
+$ aws codebuild batch-get-builds --ids northstar-ci:b2720629-1f6b-41fa-85e9-ae1d2ee1ee97 --region us-east-1 --query 'builds[0].[id,buildStatus,currentPhase,resolvedSourceVersion]' --output table
+-------------------------------------------------------
+|                   BatchGetBuilds                    |
++-----------------------------------------------------+
+|  northstar-ci:b2720629-1f6b-41fa-85e9-ae1d2ee1ee97  |
+|  SUCCEEDED                                          |
+|  COMPLETED                                          |
+|  2d71726a8e10ddbd73c9a23a2f29514a03e43c9a           |
++-----------------------------------------------------+
+
+2. Model Registry Gained Exactly One Version (Version 13, PendingManualApproval):
+$ aws sagemaker list-model-packages --model-package-group-name northstar-churn-models --sort-by CreationTime --sort-order Descending --max-results 2 --region us-east-1 --query 'ModelPackageSummaryList[*].[ModelPackageVersion,ModelApprovalStatus,CreationTime]' --output table
+-------------------------------------------------
+|               ListModelPackages               |
++----+-----------------------+------------------+
+|  13|  PendingManualApproval|  1793411640.004  |
+|  12|  PendingManualApproval|  1793408856.812  |
++----+-----------------------+------------------+

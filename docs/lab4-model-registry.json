@@ -1,0 +1,124 @@
+{
+    "ModelPackageSummaryList": [
+        {
+            "ModelPackageGroupName": "northstar-churn-models",
+            "ModelPackageVersion": 13,
+            "ModelPackageArn": "arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/13",
+            "CreationTime": 1793411640.004,
+            "ModelPackageStatus": "Completed",
+            "ModelApprovalStatus": "PendingManualApproval",
+            "ModelPackageRegistrationType": "Registered"
+        },
+        {
+            "ModelPackageGroupName": "northstar-churn-models",
+            "ModelPackageVersion": 12,
+            "ModelPackageArn": "arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/12",
+            "CreationTime": 1793408856.812,
+            "ModelPackageStatus": "Completed",
+            "ModelApprovalStatus": "PendingManualApproval",
+            "ModelPackageRegistrationType": "Registered"
+        },
+        {
+            "ModelPackageGroupName": "northstar-churn-models",
+            "ModelPackageVersion": 11,
+            "ModelPackageArn": "arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/11",
+            "CreationTime": 1793408152.974,
+            "ModelPackageStatus": "Completed",
+            "ModelApprovalStatus": "Approved",
+            "ModelPackageRegistrationType": "Registered"
+        },
+        {
+            "ModelPackageGroupName": "northstar-churn-models",
+            "ModelPackageVersion": 10,
+            "ModelPackageArn": "arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/10",
+            "CreationTime": 1793407695.859,
+            "ModelPackageStatus": "Completed",
+            "ModelApprovalStatus": "PendingManualApproval",
+            "ModelPackageRegistrationType": "Registered"
+        },
+        {
+            "ModelPackageGroupName": "northstar-churn-models",
+            "ModelPackageVersion": 9,
+            "ModelPackageArn": "arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/9",
+            "CreationTime": 1793407325.976,
+            "ModelPackageStatus": "Completed",
+            "ModelApprovalStatus": "PendingManualApproval",
+            "ModelPackageRegistrationType": "Registered"
+        },
+        {
+            "ModelPackageGroupName": "northstar-churn-models",
+            "ModelPackageVersion": 8,
+            "ModelPackageArn": "arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/8",
+            "CreationTime": 1793406437.025,
+            "ModelPackageStatus": "Completed",
+            "ModelApprovalStatus": "Rejected",
+            "ModelPackageRegistrationType": "Registered"
+        },
+        {
+            "ModelPackageGroupName": "northstar-churn-models",
+            "ModelPackageVersion": 7,
+            "ModelPackageArn": "arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/7",
+            "CreationTime": 1793394484.931,
+            "ModelPackageStatus": "Completed",
+            "ModelApprovalStatus": "Rejected",
+            "ModelPackageRegistrationType": "Registered"
+        },
+        {
+            "ModelPackageGroupName": "northstar-churn-models",
+            "ModelPackageVersion": 6,
+            "ModelPackageArn": "arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/6",
+            "CreationTime": 1793394150.011,
+            "ModelPackageStatus": "Completed",
+            "ModelApprovalStatus": "Rejected",
+            "ModelPackageRegistrationType": "Registered"
+        },
+        {
+            "ModelPackageGroupName": "northstar-churn-models",
+            "ModelPackageVersion": 5,
+            "ModelPackageArn": "arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/5",
+            "CreationTime": 1793392962.935,
+            "ModelPackageStatus": "Completed",
+            "ModelApprovalStatus": "Rejected",
+            "ModelPackageRegistrationType": "Registered"
+        },
+        {
+            "ModelPackageGroupName": "northstar-churn-models",
+            "ModelPackageVersion": 4,
+            "ModelPackageArn": "arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/4",
+            "CreationTime": 1793391989.027,
+            "ModelPackageStatus": "Completed",
+            "ModelApprovalStatus": "Rejected",
+            "ModelPackageRegistrationType": "Registered"
+        },
+        {
+            "ModelPackageGroupName": "northstar-churn-models",
+            "ModelPackageVersion": 3,
+            "ModelPackageArn": "arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/3",
+            "ModelPackageDescription": "Churn XGBoost model (AUC: 0.7662) trained 2026-10-16",
+            "CreationTime": 1792166725.957,
+            "ModelPackageStatus": "Completed",
+            "ModelApprovalStatus": "PendingManualApproval",
+            "ModelPackageRegistrationType": "Registered"
+        },
+        {
+            "ModelPackageGroupName": "northstar-churn-models",
+            "ModelPackageVersion": 2,
+            "ModelPackageArn": "arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/2",
+            "ModelPackageDescription": "Churn XGBoost model (AUC: 0.782) trained 2026-10-16",
+            "CreationTime": 1792166518.196,
+            "ModelPackageStatus": "Completed",
+            "ModelApprovalStatus": "PendingManualApproval",
+            "ModelPackageRegistrationType": "Registered"
+        },
+        {
+            "ModelPackageGroupName": "northstar-churn-models",
+            "ModelPackageVersion": 1,
+            "ModelPackageArn": "arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/1",
+            "ModelPackageDescription": "Churn XGBoost model (AUC: 0.7764) trained 2026-10-15",
+            "CreationTime": 1792093145.805,
+            "ModelPackageStatus": "Completed",
+            "ModelApprovalStatus": "PendingManualApproval",
+            "ModelPackageRegistrationType": "Registered"
+        }
+    ]
+}

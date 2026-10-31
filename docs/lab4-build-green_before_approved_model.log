@@ -1,45 +1,45 @@
-[Container] 2026/10/31 00:52:00.259583 Running on CodeBuild On-demand
-[Container] 2026/10/31 00:52:00.259590 Waiting for agent ping
-[Container] 2026/10/31 00:52:00.405820 Waiting for DOWNLOAD_SOURCE
-[Container] 2026/10/31 00:52:00.774208 Phase is DOWNLOAD_SOURCE
-[Container] 2026/10/31 00:52:00.775471 CODEBUILD_SRC_DIR=/codebuild/output/src3347687232/src
-[Container] 2026/10/31 00:52:00.775886 YAML location is /codebuild/output/src3347687232/src/buildspec.yml
-[Container] 2026/10/31 00:52:00.777579 Setting HTTP client timeout to higher timeout for S3 source
-[Container] 2026/10/31 00:52:00.777660 Processing environment variables
-[Container] 2026/10/31 00:52:00.814453 Expanded report group name northstar-test-reports
-[Container] 2026/10/31 00:52:00.814470 Found report group name northstar-test-reports
-[Container] 2026/10/31 00:52:00.814476 Adding prefix northstar-ci for report group name northstar-test-reports
-[Container] 2026/10/31 00:52:00.849850 Selecting 'python' runtime version '3.11' based on manual selections...
-[Container] 2026/10/31 00:52:00.849915 Running command echo "Installing Python version 3.11 ..."
+[Container] 2026/10/31 00:43:10.588594 Running on CodeBuild On-demand
+[Container] 2026/10/31 00:43:10.588602 Waiting for agent ping
+[Container] 2026/10/31 00:43:10.820903 Waiting for DOWNLOAD_SOURCE
+[Container] 2026/10/31 00:43:12.444575 Phase is DOWNLOAD_SOURCE
+[Container] 2026/10/31 00:43:12.445772 CODEBUILD_SRC_DIR=/codebuild/output/src1725523915/src
+[Container] 2026/10/31 00:43:12.446188 YAML location is /codebuild/output/src1725523915/src/buildspec.yml
+[Container] 2026/10/31 00:43:12.448341 Setting HTTP client timeout to higher timeout for S3 source
+[Container] 2026/10/31 00:43:12.448441 Processing environment variables
+[Container] 2026/10/31 00:43:12.491643 Expanded report group name northstar-test-reports
+[Container] 2026/10/31 00:43:12.491667 Found report group name northstar-test-reports
+[Container] 2026/10/31 00:43:12.491678 Adding prefix northstar-ci for report group name northstar-test-reports
+[Container] 2026/10/31 00:43:12.671187 Selecting 'python' runtime version '3.11' based on manual selections...
+[Container] 2026/10/31 00:43:12.671282 Running command echo "Installing Python version 3.11 ..."
 Installing Python version 3.11 ...
 
-[Container] 2026/10/31 00:52:00.854110 Running command pyenv global $PYTHON_311_VERSION
+[Container] 2026/10/31 00:43:12.676829 Running command pyenv global $PYTHON_311_VERSION
 
-[Container] 2026/10/31 00:52:00.887485 Moving to directory /codebuild/output/src3347687232/src
-[Container] 2026/10/31 00:52:00.888899 Expanded cache path /root/.cache/pip/**/*
-[Container] 2026/10/31 00:52:00.922016 Registering with agent
-[Container] 2026/10/31 00:52:00.922032 Phases found in YAML: 4
-[Container] 2026/10/31 00:52:00.922039  INSTALL: 10 commands
-[Container] 2026/10/31 00:52:00.922043  PRE_BUILD: 16 commands
-[Container] 2026/10/31 00:52:00.922045  BUILD: 15 commands
-[Container] 2026/10/31 00:52:00.922048  POST_BUILD: 7 commands
-[Container] 2026/10/31 00:52:00.922239 Phase complete: DOWNLOAD_SOURCE State: SUCCEEDED
-[Container] 2026/10/31 00:52:00.922248 Phase context status code:  Message: 
-[Container] 2026/10/31 00:52:01.023625 Entering phase INSTALL
-[Container] 2026/10/31 00:52:01.056643 Running command echo "=== INSTALL PHASE ==="
+[Container] 2026/10/31 00:43:13.258914 Moving to directory /codebuild/output/src1725523915/src
+[Container] 2026/10/31 00:43:13.260225 Expanded cache path /root/.cache/pip/**/*
+[Container] 2026/10/31 00:43:13.301575 Registering with agent
+[Container] 2026/10/31 00:43:13.301593 Phases found in YAML: 4
+[Container] 2026/10/31 00:43:13.301599  INSTALL: 10 commands
+[Container] 2026/10/31 00:43:13.301603  PRE_BUILD: 16 commands
+[Container] 2026/10/31 00:43:13.301605  BUILD: 15 commands
+[Container] 2026/10/31 00:43:13.301608  POST_BUILD: 7 commands
+[Container] 2026/10/31 00:43:13.301789 Phase complete: DOWNLOAD_SOURCE State: SUCCEEDED
+[Container] 2026/10/31 00:43:13.301797 Phase context status code:  Message: 
+[Container] 2026/10/31 00:43:13.405620 Entering phase INSTALL
+[Container] 2026/10/31 00:43:13.438670 Running command echo "=== INSTALL PHASE ==="
 === INSTALL PHASE ===
 
-[Container] 2026/10/31 00:52:01.060987 Running command echo "Build started at $(date)"
-Build started at Sat Oct 31 00:52:01 UTC 2026
+[Container] 2026/10/31 00:43:13.442731 Running command echo "Build started at $(date)"
+Build started at Sat Oct 31 00:43:13 UTC 2026
 
-[Container] 2026/10/31 00:52:01.065232 Running command echo "Commit SHA $CODEBUILD_RESOLVED_SOURCE_VERSION"
+[Container] 2026/10/31 00:43:13.447037 Running command echo "Commit SHA $CODEBUILD_RESOLVED_SOURCE_VERSION"
 Commit SHA f9251ecc2d2c225355bd9f636fc7aef3fddec523
 
-[Container] 2026/10/31 00:52:01.068742 Running command pip install --upgrade pip
+[Container] 2026/10/31 00:43:13.450728 Running command pip install --upgrade pip
 Requirement already satisfied: pip in /root/.pyenv/versions/3.11.17/lib/python3.11/site-packages (26.2.2)
 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
 
-[Container] 2026/10/31 00:52:01.615472 Running command pip install -r requirements.txt
+[Container] 2026/10/31 00:43:30.056580 Running command pip install -r requirements.txt
 Requirement already satisfied: boto3>=1.34.0 in /root/.pyenv/versions/3.11.17/lib/python3.11/site-packages (from -r requirements.txt (line 8)) (1.43.120)
 Collecting pandas>=2.0.0 (from -r requirements.txt (line 9))
   Downloading pandas-3.1.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (18 kB)
@@ -177,10 +177,10 @@ Collecting click>=7.0 (from uvicorn->sagemaker<3.0.0,>=2.200.0->-r requirements.
 Collecting h11>=0.8 (from uvicorn->sagemaker<3.0.0,>=2.200.0->-r requirements.txt (line 16))
   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
 Downloading sagemaker-2.257.7-py3-none-any.whl (1.7 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 32.8 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 12.2 MB/s  0:00:00
 Downloading smdebug_rulesconfig-1.0.1-py2.py3-none-any.whl (20 kB)
 Downloading numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.9 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.9/16.9 MB 129.6 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.9/16.9 MB 14.9 MB/s  0:00:01
 Downloading attrs-25.4.0-py3-none-any.whl (67 kB)
 Downloading graphene-3.4.3-py2.py3-none-any.whl (114 kB)
 Downloading graphql_core-3.2.13-py3-none-any.whl (268 kB)
@@ -194,20 +194,20 @@ Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
 Downloading mock-4.0.3-py3-none-any.whl (28 kB)
 Downloading pydantic-2.14.2-py3-none-any.whl (490 kB)
 Downloading pydantic_core-2.50.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.2 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 192.6 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 18.0 MB/s  0:00:00
 Downloading rich-14.3.4-py3-none-any.whl (310 kB)
 Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 139.2 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 18.1 MB/s  0:00:00
 Downloading tblib-3.2.2-py3-none-any.whl (12 kB)
 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
 Downloading pandas-3.1.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (12.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.3/12.3 MB 136.1 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.3/12.3 MB 19.3 MB/s  0:00:00
 Downloading pyarrow-26.0.0-cp311-cp311-manylinux_2_28_x86_64.whl (53.9 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.9/53.9 MB 143.1 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.9/53.9 MB 13.8 MB/s  0:00:03
 Downloading scikit_learn-1.9.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (9.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.3/9.3 MB 133.6 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.3/9.3 MB 15.3 MB/s  0:00:00
 Downloading xgboost-3.2.0-py3-none-manylinux_2_28_x86_64.whl (131.7 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 131.7/131.7 MB 129.0 MB/s  0:00:01
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 131.7/131.7 MB 24.7 MB/s  0:00:05
 Downloading pytest-9.2.0-py3-none-any.whl (411 kB)
 Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
@@ -221,7 +221,7 @@ Downloading narwhals-2.28.0-py3-none-any.whl (490 kB)
 Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
 Downloading rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (375 kB)
 Downloading scipy-1.17.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 140.6 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 35.3 MB/s  0:00:01
 Downloading threadpoolctl-3.7.0-py3-none-any.whl (26 kB)
 Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
 Downloading zipp-4.1.2-py3-none-any.whl (10 kB)
@@ -236,7 +236,7 @@ Downloading starlette-1.10.0-py3-none-any.whl (80 kB)
 Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
 Downloading google_pasta-0.2.0-py3-none-any.whl (57 kB)
 Downloading nvidia_nccl_cu12-2.32.3-py3-none-manylinux_2_27_x86_64.whl (351.5 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 351.5/351.5 MB 86.9 MB/s  0:00:03
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 351.5/351.5 MB 30.9 MB/s  0:00:10
 Downloading pathos-0.3.5-py3-none-any.whl (82 kB)
 Downloading dill-0.4.1-py3-none-any.whl (120 kB)
 Downloading multiprocess-0.70.19-py311-none-any.whl (144 kB)
@@ -260,63 +260,63 @@ virtualenv 21.15.1 requires packaging>=26.3, but you have packaging 24.2 which i
 Successfully installed annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 attrs-25.4.0 charset_normalizer-3.5.2 click-8.5.0 cloudpickle-3.1.2 dill-0.4.1 docker-7.2.0 fastapi-0.162.0 google-pasta-0.2.0 graphene-3.4.3 graphql-core-3.2.13 graphql-relay-3.2.0 h11-0.16.0 idna-3.20 importlib-metadata-6.11.0 iniconfig-2.3.1 joblib-1.6.0 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 markdown-it-py-4.2.0 mdurl-0.1.2 mock-4.0.3 multiprocess-0.70.19 narwhals-2.28.0 numpy-2.4.6 nvidia-nccl-cu12-2.32.3 omegaconf-2.4.0 opentelemetry-api-1.45.2 packaging-24.2 pandas-3.1.0 pathos-0.3.5 pluggy-1.7.0 pox-0.3.7 ppft-1.7.8 protobuf-6.33.6 psutil-7.2.2 pyarrow-26.0.0 pydantic-2.14.2 pydantic-core-2.50.2 pygments-2.21.0 pytest-9.2.0 pytz-2026.6 referencing-0.37.0 requests-2.34.2 rich-14.3.4 rpds-py-2026.9.1 sagemaker-2.257.7 sagemaker-core-1.0.78 schema-0.7.8 scikit-learn-1.9.1 scipy-1.17.1 smdebug-rulesconfig-1.0.1 starlette-1.10.0 tblib-3.2.2 threadpoolctl-3.7.0 tqdm-4.70.1 typing-extensions-4.16.0 typing-inspection-0.4.4 uvicorn-0.54.0 xgboost-3.2.0 zipp-4.1.2
 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
 
-[Container] 2026/10/31 00:52:39.859537 Running command if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+[Container] 2026/10/31 00:44:26.654386 Running command if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
 
-[Container] 2026/10/31 00:52:39.865395 Running command aws sts get-caller-identity
+[Container] 2026/10/31 00:44:26.660031 Running command aws sts get-caller-identity
 {
-    "UserId": "AROAQTUT6WWC74P2PO76C:AWSCodeBuild-68bca577-32d4-4db5-8c83-bacc304eb02c",
+    "UserId": "AROAQTUT6WWC74P2PO76C:AWSCodeBuild-270f9840-de3e-401d-a002-e039c47da489",
     "Account": "042186225029",
-    "Arn": "arn:aws:sts::042186225029:assumed-role/northstar-codebuild-role/AWSCodeBuild-68bca577-32d4-4db5-8c83-bacc304eb02c"
+    "Arn": "arn:aws:sts::042186225029:assumed-role/northstar-codebuild-role/AWSCodeBuild-270f9840-de3e-401d-a002-e039c47da489"
 }
 
-[Container] 2026/10/31 00:52:40.504419 Running command export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+[Container] 2026/10/31 00:44:35.588273 Running command export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 
-[Container] 2026/10/31 00:52:41.116836 Running command export DATA_BUCKET="${PROJECT}-${ENVIRONMENT}-data-${ACCOUNT_ID}"
+[Container] 2026/10/31 00:44:36.199208 Running command export DATA_BUCKET="${PROJECT}-${ENVIRONMENT}-data-${ACCOUNT_ID}"
 
-[Container] 2026/10/31 00:52:41.122442 Running command echo "Data bucket ${DATA_BUCKET}"
+[Container] 2026/10/31 00:44:36.204861 Running command echo "Data bucket ${DATA_BUCKET}"
 Data bucket northstar-dev-data-042186225029
 
-[Container] 2026/10/31 00:52:41.164692 Phase complete: INSTALL State: SUCCEEDED
-[Container] 2026/10/31 00:52:41.164710 Phase context status code:  Message: 
-[Container] 2026/10/31 00:52:41.202764 Entering phase PRE_BUILD
-[Container] 2026/10/31 00:52:41.203687 Running command echo "PRE-BUILD PHASE - Tests"
+[Container] 2026/10/31 00:44:36.240958 Phase complete: INSTALL State: SUCCEEDED
+[Container] 2026/10/31 00:44:36.240972 Phase context status code:  Message: 
+[Container] 2026/10/31 00:44:36.277272 Entering phase PRE_BUILD
+[Container] 2026/10/31 00:44:36.278036 Running command echo "PRE-BUILD PHASE - Tests"
 PRE-BUILD PHASE - Tests
 
-[Container] 2026/10/31 00:52:41.209608 Running command export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+[Container] 2026/10/31 00:44:36.284310 Running command export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 
-[Container] 2026/10/31 00:52:41.845184 Running command export DATA_BUCKET="${PROJECT}-${ENVIRONMENT}-data-${ACCOUNT_ID}"
+[Container] 2026/10/31 00:44:36.929996 Running command export DATA_BUCKET="${PROJECT}-${ENVIRONMENT}-data-${ACCOUNT_ID}"
 
-[Container] 2026/10/31 00:52:41.850825 Running command rm -rf data/processed data/features
+[Container] 2026/10/31 00:44:36.935657 Running command rm -rf data/processed data/features
 
-[Container] 2026/10/31 00:52:41.857236 Running command mkdir -p data/processed data/features
+[Container] 2026/10/31 00:44:36.942085 Running command mkdir -p data/processed data/features
 
-[Container] 2026/10/31 00:52:41.863332 Running command aws s3 cp "s3://${DATA_BUCKET}/raw/customers/northstar-raw-sample.csv" data/northstar-raw-sample.csv
-Completed 13.0 MiB/13.0 MiB (59.6 MiB/s) with 1 file(s) remainingdownload: s3://northstar-dev-data-042186225029/raw/customers/northstar-raw-sample.csv to data/northstar-raw-sample.csv
+[Container] 2026/10/31 00:44:36.948069 Running command aws s3 cp "s3://${DATA_BUCKET}/raw/customers/northstar-raw-sample.csv" data/northstar-raw-sample.csv
+Completed 13.0 MiB/13.0 MiB (60.7 MiB/s) with 1 file(s) remainingdownload: s3://northstar-dev-data-042186225029/raw/customers/northstar-raw-sample.csv to data/northstar-raw-sample.csv
 
-[Container] 2026/10/31 00:52:42.873944 Running command aws s3 cp "s3://${DATA_BUCKET}/processed/customers/" data/processed/ --recursive --exclude "*_glue_temp*"
-Completed 1.0 MiB/3.7 MiB (9.6 MiB/s) with 4 file(s) remainingdownload: s3://northstar-dev-data-042186225029/processed/customers/part-00000-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet to data/processed/part-00000-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet
-Completed 1.0 MiB/3.7 MiB (9.6 MiB/s) with 3 file(s) remainingCompleted 1.9 MiB/3.7 MiB (15.4 MiB/s) with 3 file(s) remainingdownload: s3://northstar-dev-data-042186225029/processed/customers/part-00002-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet to data/processed/part-00002-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet
-Completed 1.9 MiB/3.7 MiB (15.4 MiB/s) with 2 file(s) remainingCompleted 2.7 MiB/3.7 MiB (19.8 MiB/s) with 2 file(s) remainingdownload: s3://northstar-dev-data-042186225029/processed/customers/part-00003-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet to data/processed/part-00003-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet
-Completed 2.7 MiB/3.7 MiB (19.8 MiB/s) with 1 file(s) remainingCompleted 3.7 MiB/3.7 MiB (25.0 MiB/s) with 1 file(s) remainingdownload: s3://northstar-dev-data-042186225029/processed/customers/part-00001-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet to data/processed/part-00001-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet
+[Container] 2026/10/31 00:44:38.063153 Running command aws s3 cp "s3://${DATA_BUCKET}/processed/customers/" data/processed/ --recursive --exclude "*_glue_temp*"
+Completed 848.1 KiB/3.7 MiB (7.7 MiB/s) with 4 file(s) remainingdownload: s3://northstar-dev-data-042186225029/processed/customers/part-00003-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet to data/processed/part-00003-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet
+Completed 848.1 KiB/3.7 MiB (7.7 MiB/s) with 3 file(s) remainingCompleted 1.7 MiB/3.7 MiB (14.1 MiB/s) with 3 file(s) remaining download: s3://northstar-dev-data-042186225029/processed/customers/part-00002-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet to data/processed/part-00002-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet
+Completed 1.7 MiB/3.7 MiB (14.1 MiB/s) with 2 file(s) remainingCompleted 2.7 MiB/3.7 MiB (16.9 MiB/s) with 2 file(s) remainingdownload: s3://northstar-dev-data-042186225029/processed/customers/part-00000-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet to data/processed/part-00000-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet
+Completed 2.7 MiB/3.7 MiB (16.9 MiB/s) with 1 file(s) remainingCompleted 3.7 MiB/3.7 MiB (18.3 MiB/s) with 1 file(s) remainingdownload: s3://northstar-dev-data-042186225029/processed/customers/part-00001-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet to data/processed/part-00001-79900d7b-b908-4a34-8c62-307c17930da6-c000.snappy.parquet
 
-[Container] 2026/10/31 00:52:43.835237 Running command aws s3 cp "s3://${DATA_BUCKET}/features/customers/"  data/features/  --recursive
-Completed 140.6 KiB/310.7 KiB (1.8 MiB/s) with 2 file(s) remainingdownload: s3://northstar-dev-data-042186225029/features/customers/part-00000-5192d700-204d-4d5a-bbf8-f9d86d45299d-c000.snappy.parquet to data/features/part-00000-5192d700-204d-4d5a-bbf8-f9d86d45299d-c000.snappy.parquet
-Completed 140.6 KiB/310.7 KiB (1.8 MiB/s) with 1 file(s) remainingCompleted 310.7 KiB/310.7 KiB (2.9 MiB/s) with 1 file(s) remainingdownload: s3://northstar-dev-data-042186225029/features/customers/part-00001-5192d700-204d-4d5a-bbf8-f9d86d45299d-c000.snappy.parquet to data/features/part-00001-5192d700-204d-4d5a-bbf8-f9d86d45299d-c000.snappy.parquet
+[Container] 2026/10/31 00:44:39.027688 Running command aws s3 cp "s3://${DATA_BUCKET}/features/customers/"  data/features/  --recursive
+Completed 140.6 KiB/310.7 KiB (1.5 MiB/s) with 2 file(s) remainingdownload: s3://northstar-dev-data-042186225029/features/customers/part-00000-5192d700-204d-4d5a-bbf8-f9d86d45299d-c000.snappy.parquet to data/features/part-00000-5192d700-204d-4d5a-bbf8-f9d86d45299d-c000.snappy.parquet
+Completed 140.6 KiB/310.7 KiB (1.5 MiB/s) with 1 file(s) remainingCompleted 310.7 KiB/310.7 KiB (3.1 MiB/s) with 1 file(s) remainingdownload: s3://northstar-dev-data-042186225029/features/customers/part-00001-5192d700-204d-4d5a-bbf8-f9d86d45299d-c000.snappy.parquet to data/features/part-00001-5192d700-204d-4d5a-bbf8-f9d86d45299d-c000.snappy.parquet
 
-[Container] 2026/10/31 00:52:44.722871 Running command export NORTHSTAR_RAW=./data/northstar-raw-sample.csv
+[Container] 2026/10/31 00:44:39.873445 Running command export NORTHSTAR_RAW=./data/northstar-raw-sample.csv
 
-[Container] 2026/10/31 00:52:44.728762 Running command export NORTHSTAR_PROCESSED=./data/processed
+[Container] 2026/10/31 00:44:39.879025 Running command export NORTHSTAR_PROCESSED=./data/processed
 
-[Container] 2026/10/31 00:52:44.734120 Running command export NORTHSTAR_FEATURES=./data/features
+[Container] 2026/10/31 00:44:39.884300 Running command export NORTHSTAR_FEATURES=./data/features
 
-[Container] 2026/10/31 00:52:44.739761 Running command echo "Running data validation tests..."
+[Container] 2026/10/31 00:44:39.889745 Running command echo "Running data validation tests..."
 Running data validation tests...
 
-[Container] 2026/10/31 00:52:44.745354 Running command python -m pytest tests/test_data.py -v --tb=short --junitxml=reports/data_tests.xml
+[Container] 2026/10/31 00:44:39.895038 Running command python -m pytest tests/test_data.py -v --tb=short --junitxml=reports/data_tests.xml
 ============================= test session starts ==============================
 platform linux -- Python 3.11.17, pytest-9.2.0, pluggy-1.7.0 -- /root/.pyenv/versions/3.11.17/bin/python
 cachedir: .pytest_cache
-rootdir: /codebuild/output/src3347687232/src
+rootdir: /codebuild/output/src1725523915/src
 configfile: pytest.ini
 plugins: platformdirs-4.13.7, anyio-4.15.1
 collecting ... collected 28 items
@@ -350,17 +350,17 @@ tests/test_data.py::TestFeatures::test_freshness PASSED                  [ 92%]
 tests/test_data.py::TestConsistency::test_feature_customers_are_subset_of_processed PASSED [ 96%]
 tests/test_data.py::TestConsistency::test_row_survival_rate PASSED       [100%]
 
-- generated xml file: /codebuild/output/src3347687232/src/reports/data_tests.xml -
-============================== 28 passed in 0.60s ==============================
+- generated xml file: /codebuild/output/src1725523915/src/reports/data_tests.xml -
+============================== 28 passed in 1.01s ==============================
 
-[Container] 2026/10/31 00:52:45.876084 Running command echo "Running feature engineering tests..."
+[Container] 2026/10/31 00:44:42.396518 Running command echo "Running feature engineering tests..."
 Running feature engineering tests...
 
-[Container] 2026/10/31 00:52:45.881858 Running command python -m pytest tests/test_features.py -v --tb=short --junitxml=reports/feature_tests.xml
+[Container] 2026/10/31 00:44:42.402666 Running command python -m pytest tests/test_features.py -v --tb=short --junitxml=reports/feature_tests.xml
 ============================= test session starts ==============================
 platform linux -- Python 3.11.17, pytest-9.2.0, pluggy-1.7.0 -- /root/.pyenv/versions/3.11.17/bin/python
 cachedir: .pytest_cache
-rootdir: /codebuild/output/src3347687232/src
+rootdir: /codebuild/output/src1725523915/src
 configfile: pytest.ini
 plugins: platformdirs-4.13.7, anyio-4.15.1
 collecting ... collected 23 items
@@ -389,28 +389,28 @@ tests/test_features.py::TestBoundaryAndEdgeCases::test_zero_purchase_behavioral_
 tests/test_features.py::TestBoundaryAndEdgeCases::test_full_feature_set_retains_zero_purchase_customer PASSED [ 95%]
 tests/test_features.py::TestBoundaryAndEdgeCases::test_single_transaction_computes_each_feature_family PASSED [100%]
 
-- generated xml file: /codebuild/output/src3347687232/src/reports/feature_tests.xml -
-============================== 23 passed in 0.77s ==============================
+- generated xml file: /codebuild/output/src1725523915/src/reports/feature_tests.xml -
+============================== 23 passed in 0.81s ==============================
 
-[Container] 2026/10/31 00:52:47.015373 Running command echo "All pre-build tests passed ✓"
+[Container] 2026/10/31 00:44:43.641173 Running command echo "All pre-build tests passed ✓"
 All pre-build tests passed ✓
 
-[Container] 2026/10/31 00:52:47.021196 Phase complete: PRE_BUILD State: SUCCEEDED
-[Container] 2026/10/31 00:52:47.021210 Phase context status code:  Message: 
-[Container] 2026/10/31 00:52:47.061832 Entering phase BUILD
-[Container] 2026/10/31 00:52:47.062664 Running command echo "BUILD PHASE - Train and evaluate"
+[Container] 2026/10/31 00:44:43.648502 Phase complete: PRE_BUILD State: SUCCEEDED
+[Container] 2026/10/31 00:44:43.648517 Phase context status code:  Message: 
+[Container] 2026/10/31 00:44:43.693992 Entering phase BUILD
+[Container] 2026/10/31 00:44:43.695048 Running command echo "BUILD PHASE - Train and evaluate"
 BUILD PHASE - Train and evaluate
 
-[Container] 2026/10/31 00:52:47.068407 Running command export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+[Container] 2026/10/31 00:44:43.707320 Running command export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 
-[Container] 2026/10/31 00:52:47.692298 Running command export DATA_BUCKET="${PROJECT}-${ENVIRONMENT}-data-${ACCOUNT_ID}"
+[Container] 2026/10/31 00:44:44.381426 Running command export DATA_BUCKET="${PROJECT}-${ENVIRONMENT}-data-${ACCOUNT_ID}"
 
-[Container] 2026/10/31 00:52:47.697928 Running command export COMMIT_SHA=$(echo "$CODEBUILD_RESOLVED_SOURCE_VERSION" | cut -c1-8)
+[Container] 2026/10/31 00:44:44.387747 Running command export COMMIT_SHA=$(echo "$CODEBUILD_RESOLVED_SOURCE_VERSION" | cut -c1-8)
 
-[Container] 2026/10/31 00:52:47.704302 Running command echo "Upserting SageMaker Pipeline ${PIPELINE_NAME}..."
+[Container] 2026/10/31 00:44:44.395613 Running command echo "Upserting SageMaker Pipeline ${PIPELINE_NAME}..."
 Upserting SageMaker Pipeline northstar-churn-pipeline...
 
-[Container] 2026/10/31 00:52:47.709886 Running command python models/churn/pipeline_definition.py \
+[Container] 2026/10/31 00:44:44.401154 Running command python models/churn/pipeline_definition.py \
   --role-arn "${SAGEMAKER_ROLE_ARN}" \
   --bucket "${DATA_BUCKET}" \
   --region "${AWS_REGION}" \
@@ -460,10 +460,10 @@ WARNING:sagemaker.workflow._utils:Popping out 'CertifyForMarketplace' from the p
 WARNING:sagemaker.workflow.utilities:Popping out 'ModelPackageName' from the pipeline definition by default since it will be overridden at pipeline execution time. Please utilize the PipelineDefinitionConfig to persist this field in the pipeline definition if desired.
 Upserted pipeline northstar-churn-pipeline
 
-[Container] 2026/10/31 00:52:51.318240 Running command echo "Starting SageMaker Pipeline execution..."
+[Container] 2026/10/31 00:44:54.973497 Running command echo "Starting SageMaker Pipeline execution..."
 Starting SageMaker Pipeline execution...
 
-[Container] 2026/10/31 00:52:51.324040 Running command EXECUTION_ARN=$(aws sagemaker start-pipeline-execution \
+[Container] 2026/10/31 00:44:54.979221 Running command EXECUTION_ARN=$(aws sagemaker start-pipeline-execution \
   --pipeline-name ${PIPELINE_NAME} \
   --pipeline-execution-display-name "codebuild-${COMMIT_SHA}" \
   --pipeline-parameters "Name=CommitSha,Value=${COMMIT_SHA}" \
@@ -472,9 +472,9 @@ Starting SageMaker Pipeline execution...
 echo "Pipeline execution started: $EXECUTION_ARN"
 echo $EXECUTION_ARN > /tmp/pipeline_execution_arn.txt
 
-Pipeline execution started: arn:aws:sagemaker:us-east-1:042186225029:pipeline/northstar-churn-pipeline/execution/q9bj4n5woixs
+Pipeline execution started: arn:aws:sagemaker:us-east-1:042186225029:pipeline/northstar-churn-pipeline/execution/p78kq3dm382j
 
-[Container] 2026/10/31 00:52:52.285828 Running command EXECUTION_ARN=$(cat /tmp/pipeline_execution_arn.txt)
+[Container] 2026/10/31 00:44:56.182311 Running command EXECUTION_ARN=$(cat /tmp/pipeline_execution_arn.txt)
 echo "Waiting for pipeline completion..."
 MAX_WAIT=2700
 ELAPSED=0
@@ -523,29 +523,30 @@ Waiting for pipeline completion...
   [90s] Pipeline status: Executing
   [120s] Pipeline status: Executing
   [150s] Pipeline status: Executing
-  [180s] Pipeline status: Succeeded
+  [180s] Pipeline status: Executing
+  [210s] Pipeline status: Succeeded
 Pipeline succeeded
-Registered: arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/11
+Registered: arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/10
 
-[Container] 2026/10/31 00:55:58.783537 Running command echo "Retrieving evaluation metrics..."
+[Container] 2026/10/31 00:48:33.316723 Running command echo "Retrieving evaluation metrics..."
 Retrieving evaluation metrics...
 
-[Container] 2026/10/31 00:55:58.789272 Running command aws s3 cp \
+[Container] 2026/10/31 00:48:33.322199 Running command aws s3 cp \
   "s3://${DATA_BUCKET}/artifacts/evaluations/${COMMIT_SHA}/evaluation_metrics.json" \
   /tmp/eval_metrics.json
 
-Completed 961 Bytes/961 Bytes (17.9 KiB/s) with 1 file(s) remainingdownload: s3://northstar-dev-data-042186225029/artifacts/evaluations/f9251ecc/evaluation_metrics.json to ../../../../tmp/eval_metrics.json
+Completed 961 Bytes/961 Bytes (10.2 KiB/s) with 1 file(s) remainingdownload: s3://northstar-dev-data-042186225029/artifacts/evaluations/f9251ecc/evaluation_metrics.json to ../../../../tmp/eval_metrics.json
 
-[Container] 2026/10/31 00:55:59.583623 Running command export EVAL_METRICS_PATH=/tmp/eval_metrics.json
+[Container] 2026/10/31 00:48:34.156176 Running command export EVAL_METRICS_PATH=/tmp/eval_metrics.json
 
-[Container] 2026/10/31 00:55:59.589604 Running command cat /tmp/eval_metrics.json
+[Container] 2026/10/31 00:48:34.161815 Running command cat /tmp/eval_metrics.json
 {
   "auc_roc": 0.7855,
   "auc_vs_baseline": 0.0648,
   "baseline_auc": 0.7208,
   "baseline_auc_roc": 0.7208,
   "commit_sha": "f9251ecc",
-  "eval_timestamp": "2026-10-31T00:55:30.454957",
+  "eval_timestamp": "2026-10-31T00:47:53.424728",
   "lift_ci_high": 0.0839,
   "lift_ci_low": 0.0455,
   "n_val_samples": 3000,
@@ -583,7 +584,7 @@ Completed 961 Bytes/961 Bytes (17.9 KiB/s) with 1 file(s) remainingdownload: s3
     }
   }
 }
-[Container] 2026/10/31 00:55:59.595470 Running command EXECUTION_ARN=$(cat /tmp/pipeline_execution_arn.txt)
+[Container] 2026/10/31 00:48:34.167760 Running command EXECUTION_ARN=$(cat /tmp/pipeline_execution_arn.txt)
 TRAIN_JOB=$(aws sagemaker list-pipeline-execution-steps \
   --pipeline-execution-arn $EXECUTION_ARN \
   --query "PipelineExecutionSteps[?StepName=='TrainChurnModel'].Metadata.TrainingJob.Arn" \
@@ -603,19 +604,19 @@ aws s3 cp \
   /tmp/model/model_metadata.json
 ls -la /tmp/model
 
-Training job: pipelines-q9bj4n5woixs-TrainChurnModel-MP0AiUOk7I
-Model artifact: s3://northstar-dev-data-042186225029/artifacts/training/pipelines-q9bj4n5woixs-TrainChurnModel-MP0AiUOk7I/output/model.tar.gz
-Completed 26.4 KiB/26.4 KiB (437.0 KiB/s) with 1 file(s) remainingdownload: s3://northstar-dev-data-042186225029/artifacts/training/pipelines-q9bj4n5woixs-TrainChurnModel-MP0AiUOk7I/output/model.tar.gz to ../../../../tmp/model/model.tar.gz
+Training job: pipelines-p78kq3dm382j-TrainChurnModel-MsI6sxEIHK
+Model artifact: s3://northstar-dev-data-042186225029/artifacts/training/pipelines-p78kq3dm382j-TrainChurnModel-MsI6sxEIHK/output/model.tar.gz
+Completed 26.4 KiB/26.4 KiB (358.5 KiB/s) with 1 file(s) remainingdownload: s3://northstar-dev-data-042186225029/artifacts/training/pipelines-p78kq3dm382j-TrainChurnModel-MsI6sxEIHK/output/model.tar.gz to ../../../../tmp/model/model.tar.gz
 tar: Ignoring unknown extended header keyword 'LIBARCHIVE.creationtime'
-Completed 5.3 KiB/5.3 KiB (81.0 KiB/s) with 1 file(s) remainingdownload: s3://northstar-dev-data-042186225029/artifacts/evaluations/f9251ecc/model_metadata.json to ../../../../tmp/model/model_metadata.json
+Completed 5.3 KiB/5.3 KiB (88.8 KiB/s) with 1 file(s) remainingdownload: s3://northstar-dev-data-042186225029/artifacts/evaluations/f9251ecc/model_metadata.json to ../../../../tmp/model/model_metadata.json
 total 108
-drwxr-xr-x 2 root root    74 Oct 31 00:56 .
-drwxrwxrwt 1 root root   141 Oct 31 00:56 ..
--rw-r--r-- 1 root root 27037 Oct 31 00:55 model.tar.gz
--rw-r--r-- 1 root root  5452 Oct 31 00:55 model_metadata.json
--rw-r--r-- 1 root root 72615 Oct 31 00:55 xgboost-model
+drwxr-xr-x 2 root root    74 Oct 31 00:48 .
+drwxrwxrwt 1 root root   141 Oct 31 00:48 ..
+-rw-r--r-- 1 root root 27039 Oct 31 00:48 model.tar.gz
+-rw-r--r-- 1 root root  5452 Oct 31 00:47 model_metadata.json
+-rw-r--r-- 1 root root 72615 Oct 31 00:47 xgboost-model
 
-[Container] 2026/10/31 00:56:02.792911 Running command CHAMPION_AUC=""
+[Container] 2026/10/31 00:48:37.428268 Running command CHAMPION_AUC=""
 CHAMPION_VERSION=""
 CHAMPION_ARN=$(aws sagemaker list-model-packages \
   --model-package-group-name northstar-churn-models \
@@ -655,7 +656,7 @@ No approved champion model found; skipping only the champion regression comparis
 ============================= test session starts ==============================
 platform linux -- Python 3.11.17, pytest-9.2.0, pluggy-1.7.0 -- /root/.pyenv/versions/3.11.17/bin/python
 cachedir: .pytest_cache
-rootdir: /codebuild/output/src3347687232/src
+rootdir: /codebuild/output/src1725523915/src
 configfile: pytest.ini
 plugins: platformdirs-4.13.7, anyio-4.15.1
 collecting ... collected 19 items
@@ -682,7 +683,7 @@ tests/test_model.py::TestStoredMetricsGate::test_regression_check SKIPPED [100%]
 
 =============================== warnings summary ===============================
 tests/test_model.py::TestModelLoading::test_model_loads_successfully
-  /codebuild/output/src3347687232/src/tests/test_model.py:86: UserWarning: [00:56:04] WARNING: /__w/xgboost/xgboost/src/c_api/c_api.cc:1509: Unknown file format: ``. Using UBJSON (`ubj`) as a guess.
+  /codebuild/output/src1725523915/src/tests/test_model.py:86: UserWarning: [00:48:39] WARNING: /__w/xgboost/xgboost/src/c_api/c_api.cc:1509: Unknown file format: ``. Using UBJSON (`ubj`) as a guess.
     model.load_model(model_path)
 
 tests/test_model.py::TestStoredMetricsGate::test_precision_top10_meets_threshold
@@ -694,24 +695,24 @@ tests/test_model.py::TestStoredMetricsGate::test_precision_top10_meets_threshold
     fixturefunc = resolve_fixture_function(fixturedef, request)
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-- generated xml file: /codebuild/output/src3347687232/src/reports/model_gate.xml -
-================== 18 passed, 1 skipped, 2 warnings in 1.11s ===================
+- generated xml file: /codebuild/output/src1725523915/src/reports/model_gate.xml -
+================== 18 passed, 1 skipped, 2 warnings in 1.14s ===================
 
-[Container] 2026/10/31 00:56:05.202196 Phase complete: BUILD State: SUCCEEDED
-[Container] 2026/10/31 00:56:05.202224 Phase context status code:  Message: 
-[Container] 2026/10/31 00:56:05.249493 Entering phase POST_BUILD
-[Container] 2026/10/31 00:56:05.250351 Running command echo "=== POST-BUILD PHASE ==="
+[Container] 2026/10/31 00:48:39.803891 Phase complete: BUILD State: SUCCEEDED
+[Container] 2026/10/31 00:48:39.803907 Phase context status code:  Message: 
+[Container] 2026/10/31 00:48:39.837451 Entering phase POST_BUILD
+[Container] 2026/10/31 00:48:39.838240 Running command echo "=== POST-BUILD PHASE ==="
 === POST-BUILD PHASE ===
 
-[Container] 2026/10/31 00:56:05.256496 Running command echo "Build completed at $(date)"
-Build completed at Sat Oct 31 00:56:05 UTC 2026
+[Container] 2026/10/31 00:48:39.844157 Running command echo "Build completed at $(date)"
+Build completed at Sat Oct 31 00:48:39 UTC 2026
 
-[Container] 2026/10/31 00:56:05.263944 Running command echo "Build status $CODEBUILD_BUILD_SUCCEEDING"
+[Container] 2026/10/31 00:48:39.850271 Running command echo "Build status $CODEBUILD_BUILD_SUCCEEDING"
 Build status 1
 
-[Container] 2026/10/31 00:56:05.269443 Running command export COMMIT_SHA=$(echo "$CODEBUILD_RESOLVED_SOURCE_VERSION" | cut -c1-8)
+[Container] 2026/10/31 00:48:39.855669 Running command export COMMIT_SHA=$(echo "$CODEBUILD_RESOLVED_SOURCE_VERSION" | cut -c1-8)
 
-[Container] 2026/10/31 00:56:05.275624 Running command if [ "$CODEBUILD_BUILD_SUCCEEDING" = "0" ] && [ -s /tmp/model_package_arn.txt ]; then
+[Container] 2026/10/31 00:48:39.861817 Running command if [ "$CODEBUILD_BUILD_SUCCEEDING" = "0" ] && [ -s /tmp/model_package_arn.txt ]; then
   PKG=$(cat /tmp/model_package_arn.txt)
   aws sagemaker update-model-package --model-package-arn "$PKG" \
     --model-approval-status Rejected \
@@ -720,7 +721,7 @@ Build status 1
 fi
 
 
-[Container] 2026/10/31 00:56:05.281156 Running command aws cloudwatch put-metric-data \
+[Container] 2026/10/31 00:48:39.867237 Running command aws cloudwatch put-metric-data \
   --namespace NorthStar/CI \
   --metric-name BuildSucceeded \
   --dimensions Project=${PROJECT}-ci \
@@ -730,7 +731,7 @@ echo "Published NorthStar/CI BuildSucceeded=${CODEBUILD_BUILD_SUCCEEDING}"
 
 Published NorthStar/CI BuildSucceeded=1
 
-[Container] 2026/10/31 00:56:05.915670 Running command if [ -n "${SLACK_WEBHOOK_URL:-}" ]; then
+[Container] 2026/10/31 00:48:40.575554 Running command if [ -n "${SLACK_WEBHOOK_URL:-}" ]; then
   if [ "$CODEBUILD_BUILD_SUCCEEDING" = "1" ]; then
     MSG="✅ NorthStar CI passed — commit ${COMMIT_SHA}"
   else
@@ -742,23 +743,23 @@ Published NorthStar/CI BuildSucceeded=1
 fi
 
 
-[Container] 2026/10/31 00:56:05.921708 Phase complete: POST_BUILD State: SUCCEEDED
-[Container] 2026/10/31 00:56:05.921724 Phase context status code:  Message: 
-[Container] 2026/10/31 00:56:06.109051 Expanding base directory path: .
-[Container] 2026/10/31 00:56:06.110739 Assembling file list
-[Container] 2026/10/31 00:56:06.110749 Expanding .
-[Container] 2026/10/31 00:56:06.112159 Expanding file paths for base directory .
-[Container] 2026/10/31 00:56:06.112168 Assembling file list
-[Container] 2026/10/31 00:56:06.112171 Expanding reports/**/*
-[Container] 2026/10/31 00:56:06.113716 Found 3 file(s)
-[Container] 2026/10/31 00:56:06.148670 Preparing to copy TEST report northstar-test-reports
-[Container] 2026/10/31 00:56:06.148683 Expanding base directory path:  .
-[Container] 2026/10/31 00:56:06.150148 Assembling file list
-[Container] 2026/10/31 00:56:06.150156 Expanding .
-[Container] 2026/10/31 00:56:06.151566 Expanding file paths for base directory .
-[Container] 2026/10/31 00:56:06.151574 Assembling file list
-[Container] 2026/10/31 00:56:06.151576 Expanding reports/*.xml
-[Container] 2026/10/31 00:56:06.153023 Found 3 file(s)
-[Container] 2026/10/31 00:56:06.153035 Report export config is NO_EXPORT, skip exporting reports
-[Container] 2026/10/31 00:56:06.153325 Phase complete: UPLOAD_ARTIFACTS State: SUCCEEDED
-[Container] 2026/10/31 00:56:06.153334 Phase context status code:  Message: 
+[Container] 2026/10/31 00:48:40.581434 Phase complete: POST_BUILD State: SUCCEEDED
+[Container] 2026/10/31 00:48:40.581448 Phase context status code:  Message: 
+[Container] 2026/10/31 00:48:40.761755 Expanding base directory path: .
+[Container] 2026/10/31 00:48:40.763468 Assembling file list
+[Container] 2026/10/31 00:48:40.763493 Expanding .
+[Container] 2026/10/31 00:48:40.764936 Expanding file paths for base directory .
+[Container] 2026/10/31 00:48:40.764946 Assembling file list
+[Container] 2026/10/31 00:48:40.764949 Expanding reports/**/*
+[Container] 2026/10/31 00:48:40.766459 Found 3 file(s)
+[Container] 2026/10/31 00:48:40.797730 Preparing to copy TEST report northstar-test-reports
+[Container] 2026/10/31 00:48:40.797743 Expanding base directory path:  .
+[Container] 2026/10/31 00:48:40.799382 Assembling file list
+[Container] 2026/10/31 00:48:40.799391 Expanding .
+[Container] 2026/10/31 00:48:40.800816 Expanding file paths for base directory .
+[Container] 2026/10/31 00:48:40.800827 Assembling file list
+[Container] 2026/10/31 00:48:40.800829 Expanding reports/*.xml
+[Container] 2026/10/31 00:48:40.802345 Found 3 file(s)
+[Container] 2026/10/31 00:48:40.802356 Report export config is NO_EXPORT, skip exporting reports
+[Container] 2026/10/31 00:48:40.802666 Phase complete: UPLOAD_ARTIFACTS State: SUCCEEDED
+[Container] 2026/10/31 00:48:40.802672 Phase context status code:  Message: 

@@ -51,7 +51,7 @@ aws codebuild batch-get-builds \
   --query 'builds[0].[id,buildStatus,startTime]' \
   --output table
 
-save_log "$B" docs/lab4-build-green3.log
+save_log "$B" docs/lab4-build-green4.log
 ```
 
 4. Stop Pipeline
