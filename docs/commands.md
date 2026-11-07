@@ -63,6 +63,30 @@ aws codepipeline stop-pipeline-execution \
   --no-abandon \
   --reason "Stopping duplicate runs"
 ```
+
+5. List models
+```
+aws sagemaker list-model-packages \
+  --model-package-group-name northstar-churn-models \
+  --query 'ModelPackageSummaryList[*].[ModelPackageVersion,ModelApprovalStatus,ModelPackageArn]' \
+  --output table
+```
+
+6. Describe model:
+```
+aws sagemaker describe-model-package \
+  --model-package-name model-package/northstar-churn-models/13 \
+  --query '{Version:ModelPackageVersion,Status:ModelApprovalStatus,Metrics:CustomerMetadataProperties}' \
+  --output json
+```
+7. Approve as champion model
+```
+aws sagemaker update-model-package \
+  --model-package-arn "arn:aws:sagemaker:us-east-1:$(aws sts get-caller-identity --query Account --output text):model-package/northstar-churn-models/13" \
+  --model-approval-status "Approved" \
+  --approval-description "Approved as champion model: AUC-ROC 0.7855, Precision@10 0.7167, Recall@10 0.3258, Lift CI [0.0455, 0.0839]"
+```
+
 Notes: 
 northstar-ci:629ff630-8ecb-48aa-b99e-07eeab269cbf
 
@@ -98,3 +122,11 @@ aws s3 ls s3://northstar-dev-data-$(aws sts get-caller-identity --query Account 
 
 # Verify Feature Store records (after job completes — offline store has ~15 min lag)
 aws sagemaker describe-feature-group --feature-group-name northstar-dev-customer-features
+
+
+Version	Status	AUC-ROC	Precision @ 10%	Recall @ 10%	Lift 95% CI	Verdict
+13	PendingManualApproval	0.7855	0.7167	0.3258	[0.0455, 0.0839]	🏆 Best Performing
+2	PendingManualApproval	0.7820	0.7100	0.3227	[0.0408, 0.0777]	Strong runner-up
+1	PendingManualApproval	0.7764	0.6900	0.3136	[0.0331, 0.0731]	Baseline model
+3	PendingManualApproval	0.7662	0.6867	0.3121	[0.0212, 0.0633]	Regressed
+11	Approved	N/A (in S3)	N/A	N/A	N/A	Prior champion placeholder

@@ -143,6 +143,15 @@ resource "aws_iam_policy" "ml_engineer" {
           "${local.bucket_arn}/features/*",
           "${local.bucket_arn}/artifacts/*"
         ]
+      },
+      {
+        Sid    = "DenyWriteArtifactsGlue"
+        Effect = "Deny"
+        Action = [
+          "s3:PutObject",
+          "s3:DeleteObject"
+        ]
+        Resource = "${local.bucket_arn}/artifacts/glue/*"
       }
     ]
   })
@@ -184,7 +193,7 @@ resource "aws_iam_role" "data_engineer" {
 
 resource "aws_iam_policy" "data_engineer" {
   name        = "${var.project}-${var.environment}-DataEngineer-policy"
-  description = "Policy for DataEngineer — ETL access, no write to artifacts/ (except artifacts/glue/)"
+  description = "Policy for DataEngineer — ETL access, no write to artifacts/ (read-only on artifacts/glue/)"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -208,27 +217,55 @@ resource "aws_iam_policy" "data_engineer" {
         Resource = local.bucket_arn
       },
       {
-        Sid    = "S3ReadAll"
+        Sid    = "S3ReadDataAndGlueScripts"
         Effect = "Allow"
         Action = [
           "s3:GetObject"
         ]
-        Resource = "${local.bucket_arn}/*"
+        Resource = [
+          "${local.bucket_arn}/raw/*",
+          "${local.bucket_arn}/processed/*",
+          "${local.bucket_arn}/features/*",
+          "${local.bucket_arn}/artifacts/glue/*"
+        ]
       },
       {
         Sid    = "S3WriteDataPrefixes"
         Effect = "Allow"
         Action = [
           "s3:PutObject",
-          "s3:DeleteObject",
-          "s3:PutObjectAcl"
+          "s3:DeleteObject"
         ]
         Resource = [
-          "${local.bucket_arn}/raw*",
-          "${local.bucket_arn}/processed*",
-          "${local.bucket_arn}/features*",
-          "${local.bucket_arn}/artifacts/glue/*"
+          "${local.bucket_arn}/raw/*",
+          "${local.bucket_arn}/processed/*",
+          "${local.bucket_arn}/features/*"
         ]
+      },
+      {
+        Sid      = "S3PutObjectAclFeatures"
+        Effect   = "Allow"
+        Action   = ["s3:PutObjectAcl"]
+        Resource = "${local.bucket_arn}/features/*"
+      },
+      {
+        Sid    = "Ec2NetworkInterfaceLifecycle"
+        Effect = "Allow"
+        Action = [
+          "ec2:CreateNetworkInterface",
+          "ec2:DeleteNetworkInterface",
+          "ec2:Describe*"
+        ]
+        Resource = "*"
+      },
+      {
+        Sid    = "Ec2NetworkInterfaceTags"
+        Effect = "Allow"
+        Action = [
+          "ec2:CreateTags",
+          "ec2:DeleteTags"
+        ]
+        Resource = "arn:aws:ec2:*:*:network-interface/*"
       },
       {
         Sid    = "CloudWatchLogs"

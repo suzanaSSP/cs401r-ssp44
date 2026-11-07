@@ -74,7 +74,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "data" {
     }
 
     expiration {
-      days = 730
+      days = 90
     }
   }
 
@@ -87,7 +87,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "data" {
     }
 
     noncurrent_version_expiration {
-      noncurrent_days = 90
+      noncurrent_days = 30
     }
   }
 
@@ -100,7 +100,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "data" {
     }
 
     noncurrent_version_expiration {
-      noncurrent_days = 90
+      noncurrent_days = 30
     }
   }
 
@@ -113,7 +113,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "data" {
     }
 
     noncurrent_version_expiration {
-      noncurrent_days = 90
+      noncurrent_days = 60
     }
   }
 
@@ -126,7 +126,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "data" {
     }
 
     expiration {
-      days = 30
+      days = 7
     }
   }
 }
