@@ -1,0 +1,21 @@
+{
+    "AlarmName": "NorthStarModelLatencyRollbackAlarm",
+    "MetricName": "ModelLatency",
+    "Namespace": "AWS/SageMaker",
+    "Statistic": "Average",
+    "Period": 60,
+    "EvaluationPeriods": 1,
+    "Threshold": 200000.0,
+    "ComparisonOperator": "GreaterThanThreshold",
+    "TreatMissingData": "notBreaching",
+    "Dimensions": [
+        {
+            "Name": "EndpointName",
+            "Value": "northstar-churn-prod"
+        },
+        {
+            "Name": "VariantName",
+            "Value": "canary"
+        }
+    ]
+}

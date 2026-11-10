@@ -86,6 +86,29 @@ aws sagemaker update-model-package \
   --model-approval-status "Approved" \
   --approval-description "Approved as champion model: AUC-ROC 0.7855, Precision@10 0.7167, Recall@10 0.3258, Lift CI [0.0455, 0.0839]"
 ```
+8. Get quotas for instace:
+```
+# ml.t2.medium
+aws service-quotas get-aws-default-service-quota \
+  --service-code sagemaker --quota-code L-29C181D7 \
+  --region us-east-1 --query 'Quota.Value' --output text
+```
+
+9. Create model from package:
+```
+aws sagemaker create-model \
+  --model-name northstar-churn-model-v1-approved \
+  --primary-container ModelPackageName="arn:aws:sagemaker:us-east-1:042186225029:model-package/northstar-churn-models/13" \
+  --execution-role-arn "arn:aws:iam::042186225029:role/northstar-dev-MLEngineer"
+```
+
+
+
+
+
+
+
+
 
 Notes: 
 northstar-ci:629ff630-8ecb-48aa-b99e-07eeab269cbf
