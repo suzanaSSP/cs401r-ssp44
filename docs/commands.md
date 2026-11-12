@@ -130,8 +130,14 @@ aws glue get-job-run --job-name northstar-dev-transform \
   --run-id $(aws glue get-job-runs --job-name northstar-dev-transform \
     --query 'JobRuns[0].Id' --output text)
 
-# Verify processed output
-aws s3 ls s3://northstar-dev-data-ACCOUNT_ID/processed/customers/ --recursive
+# 6. Check that the job SUCCEEDED
+aws glue get-job-runs --job-name northstar-dev-transform --query 'JobRuns[0].JobRunState'
+
+# 7. Check the Parquet output in S3
+aws s3 ls s3://northstar-dev-data-$(aws sts get-caller-identity --query Account --output text)/processed/customers/ --recursive
+
+  # OR do this Verify processed output
+  aws s3 ls s3://northstar-dev-data-ACCOUNT_ID/processed/customers/ --recursive
 
 and
 # Run feature engineering job

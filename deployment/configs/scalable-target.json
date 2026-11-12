@@ -5,7 +5,3 @@
   "MinCapacity": 1,
   "MaxCapacity": 2
 }
-
-register using this command
-aws application-autoscaling register-scalable-target \
-  --cli-input-json file://deployment/configs/scalable-target.json

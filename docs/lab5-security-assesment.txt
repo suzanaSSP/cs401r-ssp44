@@ -1,0 +1,10 @@
+Threat:
+
+Too many requests (DoS):
+    - Use load balance
+    - set WAF to be able to filter traffic coming in
+    
+User can try to access data in model
+
+Data poisoning (Tampering)
+    - Strict Data Engineer role
