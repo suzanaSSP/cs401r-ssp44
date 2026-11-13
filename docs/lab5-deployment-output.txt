@@ -1,0 +1,94 @@
+Lab 5 deployment evidence - account 042186225029
+
+===== 0. Model Registry: versions and approval status  (2026-11-13T06:24:33Z) =====
+---------------------------------------------------
+|                ListModelPackages                |
++----+-------------------------+------------------+
+|  13|  Approved               |  1793411640.004  |
+|  12|  PendingManualApproval  |  1793408856.812  |
+|  11|  Approved               |  1793408152.974  |
+|  10|  PendingManualApproval  |  1793407695.859  |
+|  9 |  PendingManualApproval  |  1793407325.976  |
+|  8 |  Rejected               |  1793406437.025  |
+|  7 |  Rejected               |  1793394484.931  |
+|  6 |  Rejected               |  1793394150.011  |
+|  5 |  Rejected               |  1793392962.935  |
+|  4 |  Rejected               |  1793391989.027  |
+|  3 |  PendingManualApproval  |  1792166725.957  |
+|  2 |  PendingManualApproval  |  1792166518.196  |
+|  1 |  PendingManualApproval  |  1792093145.805  |
++----+-------------------------+------------------+
+
+===== 1. describe-endpoint: both variants and their weights  (2026-11-13T06:24:33Z) =====
+{
+    "Status": "InService",
+    "Config": "northstar-churn-prod-config",
+    "Variants": [
+        {
+            "Name": "champion",
+            "Weight": 90.0,
+            "Instances": 1
+        },
+        {
+            "Name": "canary",
+            "Weight": 10.0,
+            "Instances": 1
+        }
+    ]
+}
+---------------------------------------------------------------------------
+|                         DescribeEndpointConfig                          |
++----------+-------------------------------------+---------------+--------+
+|  champion|  northstar-churn-model-v2           |  ml.t2.medium |  90.0  |
+|  canary  |  northstar-churn-model-v1-approved  |  ml.t2.medium |  10.0  |
++----------+-------------------------------------+---------------+--------+
+
+===== 2. auto-scaling: register attempt, live targets and policies, quota requests  (2026-11-13T06:24:35Z) =====
+
+An error occurred (ValidationException) when calling the RegisterScalableTarget operation: You cannot register a variant with ml.t2.medium instance type as a scalable target. This is because the burstable performance of these instances can lead to unpredictable behavior with Auto Scaling. Please change the instance type to a non burstable type before configuring Auto Scaling for the variant.
+{
+    "ScalableTargets": []
+}
+{
+    "ScalingPolicies": []
+}
+-----------------------------------------------------------------------------------------
+|                        ListRequestedServiceQuotaChangeHistory                         |
++----------------------------------------------+------+--------------+------------------+
+|  ml.m5.large for cluster spot instance usage |  1.0 |  CASE_CLOSED |  1793325629.185  |
++----------------------------------------------+------+--------------+------------------+
+
+===== 3. rollback alarm: definition as code, then live state  (2026-11-13T06:24:38Z) =====
+{
+    "AlarmName": "NorthStarModelLatencyRollbackAlarm",
+    "MetricName": "ModelLatency",
+    "Namespace": "AWS/SageMaker",
+    "Statistic": "Average",
+    "Period": 60,
+    "EvaluationPeriods": 1,
+    "Threshold": 200000.0,
+    "ComparisonOperator": "GreaterThanThreshold",
+    "TreatMissingData": "notBreaching",
+    "Dimensions": [
+        {
+            "Name": "EndpointName",
+            "Value": "northstar-churn-prod"
+        },
+        {
+            "Name": "VariantName",
+            "Value": "canary"
+        }
+    ]
+}
+===== 4. observed traffic split at 9:1  (2026-11-13T06:24:38Z) =====
+canary 23 / champion 177   (n=200)
+
+===== 5. after rollback: weights, then observed split  (2026-11-13T06:34:48Z) =====
+champion	1.0
+canary	0.0
+champion 100   (n=100)
+
+===== 6. after teardown: live API  (2026-11-13T06:42:53Z) =====
+endpoints:        0
+endpoint configs: 0
+scalable targets: 0
