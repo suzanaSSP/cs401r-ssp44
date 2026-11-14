@@ -102,10 +102,24 @@ aws sagemaker create-model \
   --execution-role-arn "arn:aws:iam::042186225029:role/northstar-dev-MLEngineer"
 ```
 
+10. List endpoints:
+```
+aws sagemaker list-models --region us-east-1
+```
 
-
-
-
+11. Create endpoint:
+```
+aws sagemaker create-endpoint \
+  --endpoint-name northstar-churn-prod \
+  --endpoint-config-name northstar-churn-prod-config-m5 \
+  --region us-east-1
+```
+- Wait until it's live
+```
+aws sagemaker wait endpoint-in-service \
+  --endpoint-name northstar-churn-prod \
+  --region us-east-1
+```
 
 
 
